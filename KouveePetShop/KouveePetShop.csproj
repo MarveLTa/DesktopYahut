@@ -65,34 +65,41 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CrudHewan.xaml.cs">
+    <Compile Include="Hewan\CrudHewan.xaml.cs">
       <DependentUpon>CrudHewan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CrudJasaLayanan.xaml.cs">
+    <Compile Include="Jasa Layanan\CrudJasaLayanan.xaml.cs">
       <DependentUpon>CrudJasaLayanan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CrudJenisHewan.xaml.cs">
+    <Compile Include="Jenis Hewan\CrudJenisHewan.xaml.cs">
       <DependentUpon>CrudJenisHewan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CrudProduk.xaml.cs">
+    <Compile Include="Produk\CrudProduk.xaml.cs">
       <DependentUpon>CrudProduk.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ukuran Hewan\CrudUkuranHewan.xaml.cs">
+      <DependentUpon>CrudUkuranHewan.xaml</DependentUpon>
     </Compile>
     <Compile Include="UiDashboard.xaml.cs">
       <DependentUpon>UiDashboard.xaml</DependentUpon>
     </Compile>
-    <Page Include="CrudHewan.xaml">
+    <Page Include="Hewan\CrudHewan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CrudJasaLayanan.xaml">
+    <Page Include="Jasa Layanan\CrudJasaLayanan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CrudJenisHewan.xaml">
+    <Page Include="Jenis Hewan\CrudJenisHewan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CrudProduk.xaml">
+    <Page Include="Produk\CrudProduk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ukuran Hewan\CrudUkuranHewan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +147,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -65,6 +65,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CrudHewan.xaml.cs">
+      <DependentUpon>CrudHewan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CrudJasaLayanan.xaml.cs">
+      <DependentUpon>CrudJasaLayanan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CrudJenisHewan.xaml.cs">
+      <DependentUpon>CrudJenisHewan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CrudProduk.xaml.cs">
+      <DependentUpon>CrudProduk.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UiDashboard.xaml.cs">
+      <DependentUpon>UiDashboard.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CrudHewan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CrudJasaLayanan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CrudJenisHewan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CrudProduk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +108,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UiDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

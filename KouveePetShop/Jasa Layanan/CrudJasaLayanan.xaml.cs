@@ -94,98 +94,185 @@ namespace KouveePetShop
 
         private void GetRecords()
         {
-            MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan", conn);
-            DataGrid.Items.Refresh();
-            conn.Open();
-            DataTable dt = new DataTable();
-            dt.Load(cmd.ExecuteReader());
-            conn.Close();
-
-            DataGrid.DataContext = dt;
-        }
-
-        private void NamaJasaLayananText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //Fungsi untuk mencari hewan sesuai nama
-            // auto mencari data
-            DataTable dt = new DataTable();
-            MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan where Nama_Jasa_Layanan LIKE '" + NamaJasaLayananText.Text + "%'", conn);
-            adp.Fill(dt);
-            DataGrid.DataContext = dt;
-        }
-
-        private void BtnTambah_Click(object sender, RoutedEventArgs e)
-        {
-            using (MySqlCommand cmd = new MySqlCommand())
-            {
-                try
-                {
-                    conn.Open();
-                    cmd.CommandText = "INSERT INTO JASA_LAYANAN(ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN) VALUES(@idukuran, @namajasa, @hargajasa)";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@idukuran", ComboBoxIdUkuranHewan.SelectedValue);
-                    cmd.Parameters.AddWithValue("@namajasa", NamaJasaLayananText.Text);
-                    cmd.Parameters.AddWithValue("@hargajasa", HargaJasaLayananText.Text);
-
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    GetRecords();
-                    MessageBox.Show("Berhasil ditambahkan");
-                    ClearData();
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
-                }
-            }
-        }
-
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            conn.Open();
             try
             {
-                ds = new DataSet();
-
-                adapter = new MySqlDataAdapter("update jasa_layanan set ID_UKURAN_HEWAN = '" + ComboBoxIdUkuranHewan.SelectedValue + "', NAMA_JASA_LAYANAN = '" + NamaJasaLayananText.Text + "', HARGA_JASA_LAYANAN = '" + HargaJasaLayananText.Text + "' where ID_JASA_LAYANAN = '" + IdJasaLayananText.Text + "'", conn);
-                adapter.Fill(ds, "jasa_layanan");
+                MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
                 conn.Close();
-                GetRecords();
-                MessageBox.Show("Berhasil Diedit!");
-                ClearData();
+
+                DataGrid.DataContext = dt;
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-                conn.Close();
+            }           
+        }
+
+        private void NamaJasaLayananText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                //Fungsi untuk mencari hewan sesuai nama
+                // auto mencari data
+                DataTable dt = new DataTable();
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan where Nama_Jasa_Layanan LIKE '" + NamaJasaLayananText.Text + "%'", conn);
+                adp.Fill(dt);
+                DataGrid.DataContext = dt;
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }           
+        }
+
+        private void BtnTambah_Click(object sender, RoutedEventArgs e)
+        {
+            double parseValue;
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    try
+                    {
+                        conn.Open();
+                        cmd.CommandText = "INSERT INTO JASA_LAYANAN(ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN) VALUES(@idukuran, @namajasa, @hargajasa)";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        
+                        if (string.IsNullOrEmpty(ComboBoxIdUkuranHewan.Text) || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "" || ComboBoxIdUkuranHewan.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("Field tidak boleh kosong", "Warning");
+                            conn.Close();
+                            return;
+                        }
+                        else if (!double.TryParse(HargaJasaLayananText.Text, out parseValue))
+                        {
+                            // cek jika inputan bukan angka
+                            MessageBox.Show("Harga Jasa Layanan hanya boleh angka!");
+                            conn.Close();
+                            return;
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@idukuran", ComboBoxIdUkuranHewan.SelectedValue);
+                            cmd.Parameters.AddWithValue("@namajasa", NamaJasaLayananText.Text);
+                            cmd.Parameters.AddWithValue("@hargajasa", HargaJasaLayananText.Text);
+
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            GetRecords();
+                            MessageBox.Show("Berhasil ditambahkan");
+                            ClearData();
+                        } 
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message);
+                        conn.Close();
+                    }
+                }
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+            
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            double parseValue;
+            try
+            {
+                ds = new DataSet();
+
+                if (string.IsNullOrEmpty(ComboBoxIdUkuranHewan.Text) || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "")
+                {
+                    MessageBox.Show("Field tidak boleh kosong!", "Warning");
+                    return;
+                }
+                else
+                {
+                    conn.Open();
+                    adapter = new MySqlDataAdapter("update jasa_layanan set ID_UKURAN_HEWAN = '" + ComboBoxIdUkuranHewan.SelectedValue + "', NAMA_JASA_LAYANAN = '" + NamaJasaLayananText.Text + "', HARGA_JASA_LAYANAN = '" + HargaJasaLayananText.Text + "' where ID_JASA_LAYANAN = '" + IdJasaLayananText.Text + "'", conn);
+
+                    if (ComboBoxIdUkuranHewan.SelectedIndex == -1 || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "" || ComboBoxIdUkuranHewan.SelectedIndex == -1)
+                    {
+                        // Cek inputan user, kosong atau tidak
+                        MessageBox.Show("Field tidak boleh kosong!", "Warning");
+                        conn.Close();
+                    }
+                    else if (!double.TryParse(HargaJasaLayananText.Text, out parseValue))
+                    {
+                        // cek jika inputan bukan angka
+                        MessageBox.Show("Harga Jasa Layanan hanya boleh angka!");
+                        conn.Close();
+                        return;
+                    }
+                    else
+                    {
+                        adapter.Fill(ds, "jasa_layanan");
+                        conn.Close();
+                        GetRecords();
+                        MessageBox.Show("Berhasil Diedit!");
+                        ClearData();
+                    } 
+                }            
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
             }
         }
 
         private void BtnHapus_Click(object sender, RoutedEventArgs e)
         {
-            conn.Open();
+            string message = "Apakah anda ingin menghapus data ini ?";
+            string caption = "Warning";
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Question;
+
             try
             {
-                using (MySqlCommand cmd = new MySqlCommand())
+                if (string.IsNullOrEmpty(ComboBoxIdUkuranHewan.Text) || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "")
                 {
-                    cmd.CommandText = "DELETE FROM JASA_LAYANAN WHERE ID_JASA_LAYANAN = @idjasa";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@idjasa", IdJasaLayananText.Text);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    GetRecords();
-                    MessageBox.Show("Berhasil Dihapus!");
-                    ClearData();
+                    MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");
+                    return;
                 }
+                else
+                {
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "DELETE FROM JASA_LAYANAN WHERE ID_JASA_LAYANAN = @idjasa";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
+                        {
+                            cmd.Parameters.AddWithValue("@idjasa", IdJasaLayananText.Text);
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            GetRecords();
+                            MessageBox.Show("Berhasil Dihapus!");
+                            ClearData();
+                        }
+                        else
+                        {
+                            conn.Close();
+                            ClearData();
+                            return;
+                        }   
+                    }
+                }               
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-                conn.Close();
             }
         }
 
@@ -211,15 +298,22 @@ namespace KouveePetShop
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGrid gd = (DataGrid)sender;
-            DataRowView selected_row = gd.SelectedItem as DataRowView;
-            if (selected_row != null)
+            try
             {
-                IdJasaLayananText.Text = selected_row["ID JASA LAYANAN"].ToString();
-                ComboBoxIdUkuranHewan.Text = selected_row["ID UKURAN HEWAN"].ToString();
-                NamaJasaLayananText.Text = selected_row["NAMA JASA LAYANAN"].ToString();
-                HargaJasaLayananText.Text = selected_row["HARGA JASA LAYANAN"].ToString();
+                DataGrid gd = (DataGrid)sender;
+                DataRowView selected_row = gd.SelectedItem as DataRowView;
+                if (selected_row != null)
+                {
+                    IdJasaLayananText.Text = selected_row["ID JASA LAYANAN"].ToString();
+                    ComboBoxIdUkuranHewan.Text = selected_row["ID UKURAN HEWAN"].ToString();
+                    NamaJasaLayananText.Text = selected_row["NAMA JASA LAYANAN"].ToString();
+                    HargaJasaLayananText.Text = selected_row["HARGA JASA LAYANAN"].ToString();
+                }
             }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }           
         }
 
         private void ClearData()

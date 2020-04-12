@@ -58,7 +58,7 @@ namespace KouveePetShop
             try
             {
                 // Tampil data ke dataGrid
-                adapter = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+                adapter = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
                 adapter.Fill(ds, "produk");
                 conn.Close();
                 GetRecords();
@@ -77,7 +77,7 @@ namespace KouveePetShop
             {
                 //Fungsi untuk mencari produk sesuai nama
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk where Nama_Produk LIKE '" + NamaProdukText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk where Nama_Produk LIKE '" + NamaProdukText.Text + "%'", conn);
                 adp.Fill(dt);
                 DataGrid.DataContext = dt;
             }
@@ -93,7 +93,7 @@ namespace KouveePetShop
             int parsedValue;
             double parseValue;
 
-            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || LokasiGambarText.Text == "")
+            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || LokasiGambarText.Text == "" || SatuanText.Text == "")
             {
                 MessageBox.Show("Field tidak boleh kosong!", "Warning");
                 return;
@@ -138,11 +138,11 @@ namespace KouveePetShop
                             picBytes = br.ReadBytes((int)fs.Length);
                             conn.Open();
 
-                            cmd.CommandText = "INSERT INTO PRODUK(NAMA_PRODUK, HARGA_PRODUK, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK) VALUES(@namaproduk, @hargaproduk, @jumlahproduk, @jumlahminimum, @gambarproduk)";
+                            cmd.CommandText = "INSERT INTO PRODUK(NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK) VALUES(@namaproduk, @hargaproduk, @satuan, @jumlahproduk, @jumlahminimum, @gambarproduk)";
                             cmd.CommandType = CommandType.Text;
                             cmd.Connection = conn;
 
-                            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || LokasiGambarText.Text == "")
+                            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || LokasiGambarText.Text == "" || SatuanText.Text == "")
                             {
                                 MessageBox.Show("Field tidak boleh kosong!", "Warning");
                                 conn.Close();
@@ -151,6 +151,7 @@ namespace KouveePetShop
                             {
                                 cmd.Parameters.AddWithValue("@namaproduk", NamaProdukText.Text);
                                 cmd.Parameters.AddWithValue("@hargaproduk", HargaProdukText.Text);
+                                cmd.Parameters.AddWithValue("@satuan", SatuanText.Text);
                                 cmd.Parameters.AddWithValue("@jumlahproduk", JumlahProdukText.Text);
                                 cmd.Parameters.AddWithValue("@jumlahminimum", JumlahMinimumProdukText.Text);
                                 cmd.Parameters.AddWithValue("@gambarproduk", picBytes);
@@ -178,7 +179,7 @@ namespace KouveePetShop
             int parsedValue;
             double parseValue;
 
-            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()))
+            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || SatuanText.Text == "")
             {
                 MessageBox.Show("Field tidak boleh kosong!", "Warning");
                 return;
@@ -221,11 +222,11 @@ namespace KouveePetShop
                             picBytes = br.ReadBytes((int)fs.Length);
                             conn.Open();
 
-                            cmd.CommandText = "UPDATE produk set NAMA_PRODUK = @namaproduk, HARGA_PRODUK = @hargaproduk, JUMLAH_PRODUK = @jumlahproduk, JUMLAH_MINIMUM_PRODUK = @jumlahminimum, GAMBAR_PRODUK = @gambarproduk WHERE ID_PRODUK = @idproduk";
+                            cmd.CommandText = "UPDATE produk set NAMA_PRODUK = @namaproduk, HARGA_PRODUK = @hargaproduk, SATUAN = @satuan, JUMLAH_PRODUK = @jumlahproduk, JUMLAH_MINIMUM_PRODUK = @jumlahminimum, GAMBAR_PRODUK = @gambarproduk WHERE ID_PRODUK = @idproduk";
                             cmd.CommandType = CommandType.Text;
                             cmd.Connection = conn;
 
-                            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()))
+                            if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()) || SatuanText.Text == "")
                             {
                                 MessageBox.Show("Field tidak boleh kosong!", "Warning");
                                 conn.Close();
@@ -235,6 +236,7 @@ namespace KouveePetShop
                                 cmd.Parameters.AddWithValue("@idproduk", IdProdukText.Text);
                                 cmd.Parameters.AddWithValue("@namaproduk", NamaProdukText.Text);
                                 cmd.Parameters.AddWithValue("@hargaproduk", HargaProdukText.Text);
+                                cmd.Parameters.AddWithValue("satuan", SatuanText.Text);
                                 cmd.Parameters.AddWithValue("@jumlahproduk", JumlahProdukText.Text);
                                 cmd.Parameters.AddWithValue("@jumlahminimum", JumlahMinimumProdukText.Text);
                                 cmd.Parameters.AddWithValue("@gambarproduk", picBytes);
@@ -268,7 +270,7 @@ namespace KouveePetShop
             {
                 if (NamaProdukText.Text == "" || String.IsNullOrEmpty(HargaProdukText.ToString()) || String.IsNullOrEmpty(JumlahProdukText.ToString()) || String.IsNullOrEmpty(JumlahMinimumProdukText.ToString()))
                 {
-                    MessageBox.Show("Field tidak boleh kosong!", "Warning");
+                    MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");
                     return;
                 }
                 else
@@ -307,7 +309,7 @@ namespace KouveePetShop
         private void BtnTampil_Click(object sender, RoutedEventArgs e)
         {
             // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
             try
             {
                 conn.Open();
@@ -328,7 +330,7 @@ namespace KouveePetShop
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+                MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
                 DataGrid.Items.Refresh();
                 conn.Open();
                 DataTable dt = new DataTable();
@@ -354,6 +356,7 @@ namespace KouveePetShop
                     IdProdukText.Text = selected_row["ID PRODUK"].ToString();
                     NamaProdukText.Text = selected_row["NAMA PRODUK"].ToString();
                     HargaProdukText.Text = selected_row["HARGA PRODUK"].ToString();
+                    SatuanText.Text = selected_row["SATUAN"].ToString();
                     JumlahProdukText.Text = selected_row["JUMLAH PRODUK"].ToString();
                     JumlahMinimumProdukText.Text = selected_row["JUMLAH MINIMUM PRODUK"].ToString();
 
@@ -449,6 +452,7 @@ namespace KouveePetShop
             NamaProdukText.Clear();
             IdProdukText.Clear();
             HargaProdukText.Clear();
+            SatuanText.Clear();
             JumlahMinimumProdukText.Clear();
             JumlahProdukText.Clear();
             GambarProduk.Source = null;

@@ -120,16 +120,23 @@ namespace KouveePetShop
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGrid gd = (DataGrid)sender;
-            DataRowView selected_row = gd.SelectedItem as DataRowView;
-            if (selected_row != null)
+            try
             {
-                IdHewanText.Text = selected_row["ID_HEWAN"].ToString();
-                ComboBoxIdJenisHewan.Text = selected_row["ID_JENIS_HEWAN"].ToString();
-                ComboBoxIdCustomer.Text = selected_row["ID_CUSTOMER"].ToString();
-                NamaHewanText.Text = selected_row["NAMA_HEWAN"].ToString();
-                DatePickTglLahir.Text = selected_row["TANGGALLAHIR_HEWAN"].ToString();
+                DataGrid gd = (DataGrid)sender;
+                DataRowView selected_row = gd.SelectedItem as DataRowView;
+                if (selected_row != null)
+                {
+                    IdHewanText.Text = selected_row["ID_HEWAN"].ToString();
+                    ComboBoxIdJenisHewan.Text = selected_row["ID_JENIS_HEWAN"].ToString();
+                    ComboBoxIdCustomer.Text = selected_row["ID_CUSTOMER"].ToString();
+                    NamaHewanText.Text = selected_row["NAMA_HEWAN"].ToString();
+                    DatePickTglLahir.Text = selected_row["TANGGALLAHIR_HEWAN"].ToString();
+                }
             }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            } 
         }
 
         private void GetRecords()
@@ -186,7 +193,7 @@ namespace KouveePetShop
 
 
                         // Cek jika inputan kosong
-                        if (string.IsNullOrEmpty(ComboBoxIdJenisHewan.Text) || string.IsNullOrEmpty(ComboBoxIdCustomer.Text) || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null)
+                        if (string.IsNullOrEmpty(ComboBoxIdJenisHewan.Text) || string.IsNullOrEmpty(ComboBoxIdCustomer.Text) || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null || ComboBoxIdCustomer.SelectedIndex == -1 || ComboBoxIdJenisHewan.SelectedIndex == -1)
                         {
                             MessageBox.Show("Field tidak boleh kosong", "Warning");
                             conn.Close();
@@ -204,8 +211,6 @@ namespace KouveePetShop
                             MessageBox.Show("Berhasil ditambahkan", "Success");
                             ClearData();
                         }
-
-
                     }
                     catch (Exception err)
                     {
@@ -218,7 +223,6 @@ namespace KouveePetShop
             {
                 MessageBox.Show(err.Message);
             }
-
         }
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
@@ -262,7 +266,6 @@ namespace KouveePetShop
             }
         }
 
-
         private void BtnHapus_Click(object sender, RoutedEventArgs e)
         {
             string message = "Apakah anda ingin menghapus data ini ?";
@@ -272,7 +275,7 @@ namespace KouveePetShop
 
             try
             {
-                // Cek jika user belum pilih data yang ingin diedit
+                // Cek jika user belum pilih data yang ingin dihapus
                 if (string.IsNullOrEmpty(ComboBoxIdJenisHewan.Text) || string.IsNullOrEmpty(ComboBoxIdCustomer.Text) || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null)
                 {
                     MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");

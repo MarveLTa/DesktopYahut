@@ -8,7 +8,7 @@
              d:DesignHeight="800" d:DesignWidth="824">
     <Grid>
         <StackPanel>
-            <Grid Width="500" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10 10">
+            <Grid Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 10">
                 <StackPanel>
                     <Grid Height="45">
                         <TextBlock Text="Produk" FontSize="20" Margin="0"  HorizontalAlignment="Center"/>
@@ -40,6 +40,15 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Harga Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
                         <TextBox x:Name="HargaProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Height="60">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Satuan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBox x:Name="SatuanText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
                     <Grid Height="60">
@@ -101,8 +110,8 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-            <Grid Margin="20 50 20 0">
-                <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding}" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
+            <Grid Margin="20 20">
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="700" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" Margin="406,-584,4,583">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>

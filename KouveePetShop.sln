@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.1022
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KouveePetShop", "KouveePetShop\KouveePetShop.csproj", "{E997C071-40F5-42E1-8222-FE3D0F3D828E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing02", "..\..\Testing02\Testing02\Testing02.csproj", "{0BA5D453-F978-4363-9D76-E9A9D4DF8722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KouveePetShop_Desktop", "C:\Users\marve\source\repos\KouveePetShop_Desktop\KouveePetShop_Desktop\KouveePetShop_Desktop.csproj", "{4F4D98C4-BE6A-45FB-83E3-4EF4CBE92C82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,19 @@ Global
 		{E997C071-40F5-42E1-8222-FE3D0F3D828E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E997C071-40F5-42E1-8222-FE3D0F3D828E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E997C071-40F5-42E1-8222-FE3D0F3D828E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA5D453-F978-4363-9D76-E9A9D4DF8722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA5D453-F978-4363-9D76-E9A9D4DF8722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA5D453-F978-4363-9D76-E9A9D4DF8722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA5D453-F978-4363-9D76-E9A9D4DF8722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4D98C4-BE6A-45FB-83E3-4EF4CBE92C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4D98C4-BE6A-45FB-83E3-4EF4CBE92C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4D98C4-BE6A-45FB-83E3-4EF4CBE92C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4D98C4-BE6A-45FB-83E3-4EF4CBE92C82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {49FA2817-0A24-4FA6-8BB2-9BA6FF2D4316}
+		SolutionGuid = {DA7F578A-5C54-475B-B648-C23AA0694CF0}
 	EndGlobalSection
 EndGlobal

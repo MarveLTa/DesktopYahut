@@ -206,8 +206,7 @@ namespace KouveePetShop
             }
         }
 
-
-        private void TextSearch_TextChanged(object sender, TextChangedEventArgs e)
+        private void CariJenisHewanText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -216,16 +215,16 @@ namespace KouveePetShop
                 //dt.Columns.Add(new DataColumn("Nama_Jenis"));
                 //DataView dv = new DataView(dt);
                 //dv.RowFilter = string.Format("Select * from jenis_hewan where Nama_Jenis LIKE '%{0}%'", NamaJenisHewanText.Text);
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JENIS_HEWAN, NAMA_JENIS from jenis_hewan where Nama_Jenis LIKE '" + NamaJenisHewanText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JENIS_HEWAN, NAMA_JENIS from jenis_hewan where Nama_Jenis LIKE '" + CariJenisHewanText.Text + "%'", conn);
                 adp.Fill(dt);
                 //DataGrid.Items.Refresh();
                 DataGrid.DataContext = dt;
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-            }           
-        }
+            }
+        }  
 
         private void BtnTampil_Click(object sender, RoutedEventArgs e)
         {
@@ -277,6 +276,6 @@ namespace KouveePetShop
         {
             NamaJenisHewanText.Clear();
             IdJenisHewanText.Clear();
-        }
+        }  
     }
 }

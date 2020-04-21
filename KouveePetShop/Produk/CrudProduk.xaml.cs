@@ -71,13 +71,13 @@ namespace KouveePetShop
             }
         }
 
-        private void NamaProdukText_TextChanged(object sender, TextChangedEventArgs e)
+        private void CariProdukText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 //Fungsi untuk mencari produk sesuai nama
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk where Nama_Produk LIKE '" + NamaProdukText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk where Nama_Produk LIKE '" + CariProdukText.Text + "%'", conn);
                 adp.Fill(dt);
                 DataGrid.DataContext = dt;
             }
@@ -457,6 +457,6 @@ namespace KouveePetShop
             JumlahProdukText.Clear();
             GambarProduk.Source = null;
             LokasiGambarText.Clear();
-        }
+        }    
     }
 }

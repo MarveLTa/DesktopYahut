@@ -111,23 +111,23 @@ namespace KouveePetShop
             }           
         }
 
-        private void NamaJasaLayananText_TextChanged(object sender, TextChangedEventArgs e)
+        private void CariJasaLayananText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 //Fungsi untuk mencari hewan sesuai nama
                 // auto mencari data
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan where Nama_Jasa_Layanan LIKE '" + NamaJasaLayananText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan where Nama_Jasa_Layanan LIKE '" + CariJasaLayananText.Text + "%'", conn);
                 adp.Fill(dt);
                 DataGrid.DataContext = dt;
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-            }           
+            }
         }
-
+       
         private void BtnTambah_Click(object sender, RoutedEventArgs e)
         {
             double parseValue;
@@ -321,6 +321,6 @@ namespace KouveePetShop
             ComboBoxIdUkuranHewan.SelectedIndex = -1;
             NamaJasaLayananText.Clear();
             HargaJasaLayananText.Clear();
-        }
+        }        
     }
 }

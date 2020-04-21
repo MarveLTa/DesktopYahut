@@ -6,7 +6,7 @@
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:KouveePetShop"
         mc:Ignorable="d"
-        Title="UiDashboard" Height="900" Width="1200" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="UiDashboard" Height="900" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid Background="#FFEEEEEE" MouseDown="Grid_MouseDown">
         <StackPanel VerticalAlignment="Top" Background="Orange">
             <Grid Background="#FF0069CE" Height="20"/>
@@ -32,31 +32,64 @@
 
         </StackPanel>
 
-        <Grid Margin="250 80 0 0">
-            <Grid x:Name="GridPrincipal"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Margin="250 60 0 0">
+            <Grid x:Name="GridPrincipal"/>
             <StackPanel>
                 <Grid Height="55">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="BtnBack" Foreground="Black" Background="LightGray" Height="45" Width="60" HorizontalAlignment="Left" Margin="3"  Click="BtnBack_Click">
-                        <materialDesign:PackIcon Kind="ArrowBack" Height="30" Margin="2"/>
+                    <Button x:Name="BtnBack" Foreground="Black" Background="LightGray" Height="45" Width="80" HorizontalAlignment="Left" Margin="10 3 0 0"  Click="BtnBack_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ArrowBack" Margin="0 2 0 0"/>
+                            <TextBlock Text="Back" Margin="3 0 0 0" ></TextBlock>
+                        </StackPanel>
                     </Button>
                 </Grid>
-                <Grid Height="100">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="BtnUkuranHewan" Grid.Column="0" Content="Ukuran Hewan" Margin="10 10" FontSize="18" Click="BtnUkuranHewan_Click"></Button>
-                    <Button x:Name="BtnJenisHewan" Grid.Column="1" Content="Jenis Hewan" Margin="10 10" FontSize="18" Click="BtnJenisHewan_Click"></Button>
-                </Grid>
-                <Grid Height="100">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="BtnHewan" Grid.Column="1" Content="Hewan" Margin="10 10" FontSize="18" Width="450" Click="BtnHewan_Click"></Button>
+                <Grid Margin="30 200">
+                    <Button x:Name="BtnUkuranHewan" FontSize="18" Click="BtnUkuranHewan_Click" HorizontalAlignment="Left" Height="250" Width="235">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="200">
+                                <StackPanel>
+                                    <Grid Height="70">
+                                        <materialDesign:PackIcon Kind="FormatSize" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="50"/>
+                                    </Grid>
+                                    <Grid Height="70">
+                                        <TextBlock Text="Ukuran Hewan" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnJenisHewan" Margin="250,10,274,10" FontSize="18" Click="BtnJenisHewan_Click" HorizontalAlignment="Center" Height="250" Width="255">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="200">
+                                <StackPanel>
+                                    <Grid Height="70">
+                                        <materialDesign:PackIcon Kind="Category" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="50"/>
+                                    </Grid>
+                                    <Grid Height="70">
+                                        <TextBlock Text="Jenis Hewan" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnHewan" Margin="10 10" FontSize="18" Click="BtnHewan_Click" HorizontalAlignment="Right" Height="250" Width="250">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="200">
+                                <StackPanel>
+                                    <Grid Height="70">
+                                        <materialDesign:PackIcon Kind="Cat" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="50"/>
+                                    </Grid>
+                                    <Grid Height="70">
+                                        <TextBlock Text="Hewan" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </StackPanel>
         </Grid>

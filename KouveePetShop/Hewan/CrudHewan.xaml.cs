@@ -99,14 +99,14 @@ namespace KouveePetShop
             }
         }
 
-        private void NamaHewanText_TextChanged(object sender, TextChangedEventArgs e)
+        private void CariHewanText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
                 //Fungsi untuk mencari hewan sesuai nama
                 // auto mencari data
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_HEWAN, ID_JENIS_HEWAN, ID_CUSTOMER, NAMA_HEWAN, TANGGALLAHIR_HEWAN from hewan where Nama_Hewan LIKE '" + NamaHewanText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_HEWAN, ID_JENIS_HEWAN, ID_CUSTOMER, NAMA_HEWAN, TANGGALLAHIR_HEWAN from hewan where Nama_Hewan LIKE '" + CariHewanText.Text + "%'", conn);
                 adp.Fill(dt);
                 //DataGrid.Items.Refresh();
                 DataGrid.DataContext = dt;
@@ -115,8 +115,7 @@ namespace KouveePetShop
             {
                 MessageBox.Show(err.Message);
             }
-
-        }
+        } 
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -341,6 +340,6 @@ namespace KouveePetShop
             IdHewanText.Clear();
             NamaHewanText.Clear();
             DatePickTglLahir.SelectedDate = null;
-        }
+        }    
     }
 }

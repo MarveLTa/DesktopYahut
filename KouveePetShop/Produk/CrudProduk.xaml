@@ -4,94 +4,107 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:KouveePetShop"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="824">
-    <Grid>
-        <StackPanel>
-            <Grid Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 10">
+             d:DesignHeight="900" d:DesignWidth="824">
+    <Border Background="LightBlue">
+        <Grid>
+            <TextBlock Text="Produk" FontSize="20" Margin="380 15"/>
+            <GroupBox Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="BoxVariantClosed" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                        <TextBlock Text="Data Produk" FontSize="15"/>
+                    </StackPanel>
+                </GroupBox.Header>
                 <StackPanel>
-                    <Grid Height="45">
-                        <TextBlock Text="Produk" FontSize="20" Margin="0"  HorizontalAlignment="Center"/>
-                    </Grid>
-
-                    <Grid Height="50">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="ID Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="ID Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="IdProdukText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Nama Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                        <TextBox x:Name="NamaProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center" TextChanged="NamaProdukText_TextChanged"/>
+                        <TextBlock Grid.Column="0" Text="Nama Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                        <TextBox x:Name="NamaProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Harga Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="Harga Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="HargaProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Satuan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="Satuan" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="SatuanText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Jumlah Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="Jumlah Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="JumlahProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Jumlah Minimum Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="Jumlah Minimum Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="JumlahMinimumProdukText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Gambar Produk" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                        <Image x:Name="GambarProduk" Grid.Column="1">
+                        <TextBlock Grid.Column="0" Text="Gambar Produk" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                        <Image x:Name="GambarProduk" Grid.Column="1" MaxHeight="45">
 
                         </Image>
-                        <Button x:Name="BtnBrowse" Grid.Column="2" Margin="10 10 10 10" Content="Browse" Click="BtnBrowse_Click"></Button>
+                        <Button x:Name="BtnBrowse" Grid.Column="2" Margin="5" Content="Browse" Click="BtnBrowse_Click"></Button>
                     </Grid>
 
-                    <Grid Height="60">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Lokasi Gambar" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
+                        <TextBlock Grid.Column="0" Text="Lokasi Gambar" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
                         <TextBox x:Name="LokasiGambarText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
                     </Grid>
-
-                    <Grid Height="50">
+                </StackPanel>
+            </GroupBox>
+            <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 345 0 0">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CallToAction" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                        <TextBlock Text="Pilih Aksi" FontSize="15"/>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel>
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -100,7 +113,7 @@
                         <Button x:Name="BtnEdit" Grid.Column="1" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
                     </Grid>
 
-                    <Grid Height="50">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -109,20 +122,89 @@
                         <Button x:Name="BtnTampil" Grid.Column="1" Content="Tampil" Margin="10 10" Click="BtnTampil_Click"/>
                     </Grid>
                 </StackPanel>
+            </GroupBox>
+            <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 515 10 10" Height="35" Width="400">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Width="400">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Cari Produk : " VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" Margin="0,6,-11,0" Grid.Column="0"></TextBlock>
+                        <TextBox x:Name="CariProdukText" Grid.Column="1" Background="White" Padding="2" TextChanged="CariProdukText_TextChanged" VerticalAlignment="Center"></TextBox>
+                    </Grid>
+                </StackPanel>
             </Grid>
-            <Grid Margin="20 20">
-                <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="700" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" Margin="406,-584,4,583">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image Height="30" Width="50" Source="{Binding GAMBAR PRODUK}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </StackPanel>
-    </Grid>
+            
+            <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 560 10 10" Width="800" Height="250">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Database" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                        <TextBlock Text="Data Produk" FontSize="15"/>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel>
+                    <ScrollViewer>
+                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="250" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID PRODUK" Binding="{Binding ID PRODUK}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn CanUserSort="False" Header="NAMA PRODUK" Binding="{Binding NAMA PRODUK}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="HARGA PRODUK" Binding="{Binding HARGA PRODUK}" Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="JUMLAH PRODUK" Binding="{Binding JUMLAH PRODUK}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="JUMLAH MINIMUM PRODUK" Binding="{Binding JUMLAH MINIMUM PRODUK}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="GAMBAR">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="25" Width="30" Source="{Binding GAMBAR PRODUK}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    </ScrollViewer>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 80 0 0" Height="250">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Analog" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                        <TextBlock Text="Log" FontSize="15"/>
+                    </StackPanel>
+                </GroupBox.Header>
+                <StackPanel>
+                    <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="235" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+    </Border>
 </UserControl>

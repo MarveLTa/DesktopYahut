@@ -3,79 +3,152 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:KouveePetShop"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="824">
-    <Grid>
-        <Grid>
+             d:DesignHeight="800" d:DesignWidth="824">
+    <Grid Background="LightBlue">
+        <TextBlock Text="Jasa Layanan" FontSize="20" Margin="350 15"/>
+        <GroupBox  Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="DogService" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Jasa Layanan" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
             <StackPanel>
-                <Grid Width="450" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10 10">
-                    <StackPanel>
-                        <Grid Height="45">
-                            <TextBlock Text="Jasa Layanan" FontSize="20" Margin="0"  HorizontalAlignment="Center"/>
-                        </Grid>
-
-                        <Grid Height="50">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="ID Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox x:Name="IdJasaLayananText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
-                        </Grid>
-
-                        <Grid Height="50">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="ID Ukuran Hewan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                            <ComboBox x:Name="ComboBoxIdUkuranHewan" Margin="10 10" Grid.Column="1">
-                            </ComboBox>
-                        </Grid>
-
-                        <Grid Height="60">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Nama Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox x:Name="NamaJasaLayananText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center" TextChanged="NamaJasaLayananText_TextChanged"/>
-                        </Grid>
-
-                        <Grid Height="60">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Harga Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox x:Name="HargaJasaLayananText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
-                        </Grid>
-
-                        <Grid Height="50">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnTambah" Grid.Column="0" Content="Tambah" Margin="10 10" Click="BtnTambah_Click"/>
-                            <Button x:Name="BtnEdit" Grid.Column="1" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
-                        </Grid>
-
-                        <Grid Height="50">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnHapus" Grid.Column="0" Content="Hapus" Margin="10 10" Click="BtnHapus_Click"/>
-                            <Button x:Name="BtnTampil" Grid.Column="1" Content="Tampil" Margin="10 10" Click="BtnTampil_Click"/>
-                        </Grid>
-                    </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="ID Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="IdJasaLayananText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
                 </Grid>
-                <Grid Margin="40 50 40 0">
-                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="True" ItemsSource="{Binding}" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="ID Ukuran Hewan" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <ComboBox x:Name="ComboBoxIdUkuranHewan" Margin="10 10" Grid.Column="1">
+                    </ComboBox>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Nama Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="NamaJasaLayananText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Harga Jasa Layanan" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="HargaJasaLayananText" Grid.Column="1" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="10 350 0 0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="CallToAction" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Pilih Aksi" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnTambah" Grid.Column="0" Content="Tambah" Margin="10 10" Click="BtnTambah_Click"/>
+                    <Button x:Name="BtnEdit" Grid.Column="1" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnHapus" Grid.Column="0" Content="Hapus" Margin="10 10" Click="BtnHapus_Click"/>
+                    <Button x:Name="BtnTampil" Grid.Column="1" Content="Tampil" Margin="10 10" Click="BtnTampil_Click"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 80 10 10" Height="35" Width="400">
+            <StackPanel Orientation="Horizontal">
+                <Grid Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Cari Jasa Layanan : " VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" Margin="0,6,-11,0" Grid.Column="0"></TextBlock>
+                    <TextBox x:Name="CariJasaLayananText" Grid.Column="1" Background="White" Padding="2" TextChanged="CariJasaLayananText_TextChanged" VerticalAlignment="Center"></TextBox>
                 </Grid>
             </StackPanel>
         </Grid>
 
+        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 120 10 10" Width="400" Height="390">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Database" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Produk" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="370" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID JASA LAYANAN" Binding="{Binding ID JASA LAYANAN}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="ID UKURAN HEWAN" Binding="{Binding ID UKURAN HEWAN}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn CanUserSort="False" Header="NAMA JASA LAYANAN" Binding="{Binding NAMA JASA LAYANAN}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="HARGA JASA LAYANAN" Binding="{Binding HARGA JASA LAYANAN}" Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" Margin="10 520 0 0" Height="160">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Analog" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Log" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="135" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

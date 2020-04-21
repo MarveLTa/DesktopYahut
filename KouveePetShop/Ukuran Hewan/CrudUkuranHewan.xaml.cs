@@ -105,35 +105,76 @@ namespace KouveePetShop
 
         private void BtnTambah_Click(object sender, RoutedEventArgs e)
         {
-            using (MySqlCommand cmd = new MySqlCommand())
+            // Untuk cek jika data sudah terinput sebelumnya
+            string ukuran = ((ComboBoxItem)ComboBoxUkuranHewan.SelectedItem).Content.ToString();
+            cmd = new MySqlCommand("Select * from ukuran_hewan where NAMA_UKURAN = '" + ukuran + "'", conn); 
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+           // int i = ds.Tables[0].Rows.Count;
+            if (dt.Rows.Count > 0)
             {
-                try
+                MessageBox.Show(string.Format("{0} sudah ada!", ukuran), "Warning");
+                ClearData();
+                return;
+                //conn.Close();
+            }
+            else
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
                 {
-                    conn.Open();
-                    cmd.CommandText = "INSERT INTO UKURAN_HEWAN(NAMA_UKURAN) VALUES(@ukuran)";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = conn;
-
-                    string ukuran = ((ComboBoxItem)ComboBoxUkuranHewan.SelectedItem).Content.ToString();
-                    if (ukuran == "" || ukuran == "-- Pilih --")
+                    try
                     {
-                        MessageBox.Show("Field tidak boleh kosong", "Warning");
+                        conn.Open();
+                        cmd.CommandText = "INSERT INTO UKURAN_HEWAN(NAMA_UKURAN) VALUES(@ukuran)";
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Connection = conn;
+
+                        if (ukuran == "" || ukuran == "-- Pilih --")
+                        {
+                            MessageBox.Show("Field tidak boleh kosong", "Warning");
+                            conn.Close();
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@ukuran", ukuran);
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            GetRecords();
+                            MessageBox.Show("Berhasil ditambahkan", "Success");
+                            ClearData();
+                            /*
+                            using (MySqlCommand cmd2 = new MySqlCommand("SELECT COUNT(*) from ukuran_hewan where nama_ukuran like @namaUkuran", conn))
+                            {
+                                string ukuran2 = ukuran;
+                                int Count = Convert.ToInt32(ukuran2);
+                                cmd2.Parameters.AddWithValue("@namaUkuran", ukuran);
+                                int valueCount = (int)cmd2.ExecuteScalar();
+
+                                if(valueCount > 0)
+                                {
+                                    MessageBox.Show("Data sudah ada, masukkan data yang lain!", "Warning");
+                                    conn.Close();
+                                    ClearData();
+                                }
+                                else
+                                {
+                                    cmd.Parameters.AddWithValue("@ukuran", ukuran);
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
+                                    GetRecords();
+                                    MessageBox.Show("Berhasil ditambahkan", "Success");
+                                    ClearData();
+                                }
+                            }*/
+                        }
+
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message);
                         conn.Close();
                     }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@ukuran", ukuran);
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-                        GetRecords();
-                        MessageBox.Show("Berhasil ditambahkan", "Success");
-                        ClearData();
-                    }
-
-                }
-                catch (Exception err)
-                {
-                    MessageBox.Show(err.Message);
                 }
             }
         }

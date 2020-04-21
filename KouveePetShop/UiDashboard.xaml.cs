@@ -64,6 +64,7 @@ namespace KouveePetShop
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
@@ -71,6 +72,7 @@ namespace KouveePetShop
                     break;
                 case 2:
                     GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;

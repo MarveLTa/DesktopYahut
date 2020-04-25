@@ -111,7 +111,6 @@ namespace KouveePetShop
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
-           // int i = ds.Tables[0].Rows.Count;
             if (dt.Rows.Count > 0)
             {
                 MessageBox.Show(string.Format("{0} sudah ada!", ukuran), "Warning");
@@ -142,31 +141,7 @@ namespace KouveePetShop
                             conn.Close();
                             GetRecords();
                             MessageBox.Show("Berhasil ditambahkan", "Success");
-                            ClearData();
-                            /*
-                            using (MySqlCommand cmd2 = new MySqlCommand("SELECT COUNT(*) from ukuran_hewan where nama_ukuran like @namaUkuran", conn))
-                            {
-                                string ukuran2 = ukuran;
-                                int Count = Convert.ToInt32(ukuran2);
-                                cmd2.Parameters.AddWithValue("@namaUkuran", ukuran);
-                                int valueCount = (int)cmd2.ExecuteScalar();
-
-                                if(valueCount > 0)
-                                {
-                                    MessageBox.Show("Data sudah ada, masukkan data yang lain!", "Warning");
-                                    conn.Close();
-                                    ClearData();
-                                }
-                                else
-                                {
-                                    cmd.Parameters.AddWithValue("@ukuran", ukuran);
-                                    cmd.ExecuteNonQuery();
-                                    conn.Close();
-                                    GetRecords();
-                                    MessageBox.Show("Berhasil ditambahkan", "Success");
-                                    ClearData();
-                                }
-                            }*/
+                            ClearData();                            
                         }
 
                     }
@@ -183,8 +158,20 @@ namespace KouveePetShop
         {
             try
             {
+                // Untuk cek jika data sudah terinput sebelumnya
+                string ukuran = ((ComboBoxItem)ComboBoxUkuranHewan.SelectedItem).Content.ToString();
+                cmd = new MySqlCommand("Select * from ukuran_hewan where NAMA_UKURAN = '" + ukuran + "'", conn);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    MessageBox.Show(string.Format("{0} sudah ada!", ukuran), "Warning");
+                    ClearData();
+                    return;
+                }
                 // Cek jika user belum pilih data yang ingin dihapus
-                if (string.IsNullOrEmpty(ComboBoxUkuranHewan.Text) || ComboBoxUkuranHewan.SelectedValue.ToString() == "-- Pilih --")
+                else if (string.IsNullOrEmpty(ComboBoxUkuranHewan.Text) || ComboBoxUkuranHewan.SelectedValue.ToString() == "-- Pilih --")
                 {
                     MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");
                     return;

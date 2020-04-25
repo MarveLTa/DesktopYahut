@@ -57,10 +57,6 @@ namespace KouveePetShop
                     BtnJenisHewan.Visibility = Visibility.Visible;
                     BtnUkuranHewan.Visibility = Visibility.Visible;
                     BtnHewan.Visibility = Visibility.Visible;
-                    //BtnJenisHewan.Visibility = Visibility.Collapsed;
-                    //BtnUkuranHewan.Visibility = Visibility.Collapsed;
-                    //BtnHewan.Visibility = Visibility.Collapsed;
-                    //GridPrincipal.Children.Add(new TestCrud());
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
@@ -77,6 +73,43 @@ namespace KouveePetShop
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
                     GridPrincipal.Children.Add(new CrudProduk());
+                    break;
+                case 3:
+                    GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
+                    BtnJenisHewan.Visibility = Visibility.Collapsed;
+                    BtnUkuranHewan.Visibility = Visibility.Collapsed;
+                    BtnHewan.Visibility = Visibility.Collapsed;
+                    GridPrincipal.Children.Add(new CrudCustomer());
+                    break;
+                case 4:
+                    GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
+                    BtnJenisHewan.Visibility = Visibility.Collapsed;
+                    BtnUkuranHewan.Visibility = Visibility.Collapsed;
+                    BtnHewan.Visibility = Visibility.Collapsed;
+                    GridPrincipal.Children.Add(new CrudPegawai());
+                    break;
+                case 5:
+                    GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
+                    BtnJenisHewan.Visibility = Visibility.Collapsed;
+                    BtnUkuranHewan.Visibility = Visibility.Collapsed;
+                    BtnHewan.Visibility = Visibility.Collapsed;
+                    GridPrincipal.Children.Add(new CrudSupplier());
+                    break;
+                case 6:
+                    string message = "Apakah anda yakin ingin keluar ?";
+                    string caption = "Warning";
+                    MessageBoxButton buttons = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Question;
+
+                    if (MessageBox.Show(message, caption, buttons, icon) == MessageBoxResult.Yes)
+                    {
+                        UiLogin login = new UiLogin();
+                        login.Show();
+                        this.Close();
+                    }
                     break;
                 default:
                     break;

@@ -274,7 +274,7 @@ namespace KouveePetShop
 
             try
             {
-                // Cek jika user belum pilih data yang ingin dihapus
+                // Cek jika user belum memilih data yang ingin dihapus
                 if (string.IsNullOrEmpty(ComboBoxIdJenisHewan.Text) || string.IsNullOrEmpty(ComboBoxIdCustomer.Text) || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null)
                 {
                     MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");

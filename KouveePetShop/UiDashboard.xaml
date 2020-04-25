@@ -6,7 +6,7 @@
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:KouveePetShop"
         mc:Ignorable="d"
-        Title="UiDashboard" Height="900" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="UiDashboard" Height="950" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid Background="#FFEEEEEE" MouseDown="Grid_MouseDown">
         <StackPanel VerticalAlignment="Top" Background="Orange">
             <Grid Background="#FF0069CE" Height="20"/>
@@ -97,7 +97,7 @@
 
             <Grid Height="75" VerticalAlignment="Top">
                 <Border Background="Orange">
-                    <TextBlock Text="ADMIN" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="RoleText"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
             </Grid>
             <materialDesign:TransitioningContent x:Name="TransitioningContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">

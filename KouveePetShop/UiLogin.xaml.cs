@@ -20,13 +20,12 @@ namespace KouveePetShop
     /// Interaction logic for UiLogin.xaml
     /// </summary>
     public partial class UiLogin : Window
-    {
-        UiDashboard dashboard = new UiDashboard();
+    {       
+        UiDashboard dashboardAdmin = new UiDashboard();
         public UiLogin()
         {
             InitializeComponent();          
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -51,12 +50,29 @@ namespace KouveePetShop
                     adapter.Fill(ds);
                     if(ds.Tables[0].Rows.Count > 0)
                     {
-                        string role = ds.Tables[0].Rows[0]["NAMA_PEGAWAI"].ToString() + " - " + ds.Tables[0].Rows[0]["ROLE"].ToString();
-                        dashboard.RoleText.Text = role;
+                        string user = ds.Tables[0].Rows[0]["NAMA_PEGAWAI"].ToString() + " - " + ds.Tables[0].Rows[0]["ROLE"].ToString();
+                        dashboardAdmin.RoleText.Text = user;
 
-                        dashboard.Show();
+                        // User akan diarahkan berdasar pada role
+                        string role = ds.Tables[0].Rows[0]["ROLE"].ToString();
+                        switch (role)
+                        {
+                            case "Admin":
+                                dashboardAdmin.Show();
+                                this.Close();
+                                break;
+                            case "Kasir":
+                                UiKasir dashboardKasir = new UiKasir();
+                                dashboardKasir.Show();
+                                this.Close();
+                                break;
+                            case "Customer Service":
+                                UiCustomerService dashboardCS = new UiCustomerService();
+                                dashboardCS.Show();
+                                this.Close();
+                                break;
+                        } 
                         conn.Close();
-                        this.Close();
                     }
                     else
                     {

@@ -3,10 +3,161 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:KouveePetShop"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="824">
     <Grid Background="LightBlue">
-            
+        <TextBlock Text="Supplier" FontSize="20" Margin="370 15" HorizontalAlignment="Center"/>
+
+        <GroupBox Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="BoxUp" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Supplier" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="ID Supplier" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="IdSupplierkText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Nama Supplier" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="NamaSupplierkText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="No.Telp Supplier" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="NomorSupplierkText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Alamat Supplier" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="AlamatSupplierkText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 80 0 0" Height="395">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Analog" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Log" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="235" VerticalScrollBarVisibility="Auto" SelectionChanged="LogsDataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="10 360 0 0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="CallToAction" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Pilih Aksi" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnTambah" Grid.Column="0" Content="Tambah" Margin="10 10" Click="BtnTambah_Click"/>
+                    <Button x:Name="BtnEdit" Grid.Column="1" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="191*"/>
+                        <ColumnDefinition Width="38*"/>
+                        <ColumnDefinition Width="154*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnHapus" Grid.Column="0" Content="Hapus" Margin="10 10" Click="BtnHapus_Click"/>
+                    <Button x:Name="BtnTampil" Grid.Column="1" Content="Tampil" Margin="10 10" Click="BtnTampil_Click" Grid.ColumnSpan="2"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 485 10 10" Height="35" Width="400">
+            <StackPanel Orientation="Horizontal">
+                <Grid Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Cari Supplier : " VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" Margin="0,6,-11,0" Grid.Column="0"></TextBlock>
+                    <TextBox x:Name="CariSupplierText" Grid.Column="1" Background="White" Padding="2" TextChanged="CariSupplierText_TextChanged" VerticalAlignment="Center"></TextBox>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 530 10 10" Width="805" Height="250">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Database" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Supplier" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <ScrollViewer>
+                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="250" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID SUPPLIER" Binding="{Binding ID_SUPPLIER}"  Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn CanUserSort="False" Header="NAMA SUPPLIER" Binding="{Binding NAMA_SUPPLIER}"  Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="NO.TELP SUPPLIER" Binding="{Binding NOTELP_SUPPLIER}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="ALAMAT SUPPLIER" Binding="{Binding ALAMAT_SUPPLIER}"  Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

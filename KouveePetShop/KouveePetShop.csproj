@@ -95,9 +95,6 @@
     <Compile Include="Kasir\UiKasir.xaml.cs">
       <DependentUpon>UiKasir.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Customer Service\UiCustomerService.xaml.cs">
-      <DependentUpon>UiCustomerService.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UiLogin.xaml.cs">
       <DependentUpon>UiLogin.xaml</DependentUpon>
     </Compile>
@@ -136,10 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Kasir\UiKasir.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Customer Service\UiCustomerService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,7 +187,7 @@
     <Resource Include="Pictures\home.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Kasir\UI\" />
+    <Folder Include="Kasir\Fungsi\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets')" />

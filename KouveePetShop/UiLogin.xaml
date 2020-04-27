@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="Kouvee Pet Shop" Height="500" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="ToolWindow">
+        Title="Kouvee Pet Shop" Height="500" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" MouseDown="Window_MouseDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="73*"/>
@@ -28,6 +28,11 @@
                 <DropShadowEffect BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1" Color="#FFBBBBBB"/>
             </Rectangle.Effect>
         </Rectangle>
+        <Grid VerticalAlignment="Top" Margin="5" Height="20">
+            <Button x:Name="BtnExit" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="BtnExit_Click" ToolTip="Exit Application" HorizontalAlignment="Right">
+                        <materialDesign:PackIcon Kind="Power"/>
+                    </Button>
+        </Grid>
         <Grid VerticalAlignment="Bottom" Margin="35,0,35,80" Height="240" Grid.RowSpan="2">
             <Label Content="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="18"/>
             <StackPanel VerticalAlignment="Center" Margin="15">
@@ -37,7 +42,7 @@
         </Grid>
         <Button Width="150" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100,0,100,65" Content="LOGIN" Grid.Row="1" Click="Button_Click" IsDefault="True"/>
         <!--
-        <TextBlock Text="ESQUECEU A SENHA?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Foreground="Gray" Cursor="Hand"/>-->
+        <TextBlock Text="Forget Password?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Foreground="Gray" Cursor="Hand"/>-->
 
         <Image gif:ImageBehavior.AnimatedSource="Pictures\jake.gif" Width="100" Height="100" VerticalAlignment="Top" Margin="30"/>
 

@@ -155,7 +155,6 @@ namespace KouveePetShop
             {
                 MessageBox.Show(err.Message);
             }
-
         }
 
         private void TampilDataGrid()
@@ -309,7 +308,17 @@ namespace KouveePetShop
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                if (err is ConstraintException || err is MySqlException)
+                {
+                    MessageBox.Show("Data ini masih digunakan oleh tabel yang lain, silahkan pilih data yang lainnya!", "Warning");
+                    conn.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show(err.Message);
+                    conn.Close();
+                }
             }
         }
 

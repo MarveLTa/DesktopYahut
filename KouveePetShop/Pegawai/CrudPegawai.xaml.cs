@@ -133,48 +133,40 @@ namespace KouveePetShop
             {
                 using(MySqlCommand cmd = new MySqlCommand())
                 {
-                    try
-                    {
-                        conn.Open();
-                        string role = ((ComboBoxItem)ComboBoxRolePegawai.SelectedItem).Content.ToString();
-                        cmd.CommandText = "INSERT INTO PEGAWAI(ROLE, NAMA_PEGAWAI, ALAMAT_PEGAWAI, TANGGALLAHIR_PEGAWAI, NOTELP_PEGAWAI, USERNAME, PASSWORD) VALUES(@role, @namapegawai, @alamatpegawai, @tanggal, @nomor, @username, @password)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = conn;
+                    conn.Open();
+                    string role = ((ComboBoxItem)ComboBoxRolePegawai.SelectedItem).Content.ToString();
+                    cmd.CommandText = "INSERT INTO PEGAWAI(ROLE, NAMA_PEGAWAI, ALAMAT_PEGAWAI, TANGGALLAHIR_PEGAWAI, NOTELP_PEGAWAI, USERNAME, PASSWORD) VALUES(@role, @namapegawai, @alamatpegawai, @tanggal, @nomor, @username, @password)";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
 
-                        // cek jika ada inputan yang kosong
-                        if(role == "" || role == "-- Pilih --" || NamaPegawaiText.Text == "" || AlamatPegawaiText.Text == "" || DatePickTglLahir.SelectedDate == null || NomorPegawaiText.Text == "" || UsernameText.Text == "" || PasswordText.Text == "")
-                        {
-                            MessageBox.Show("Field tidak boleh kosong", "Warning");
-                            conn.Close();
-                        }
-                        else
-                        {
-                            string tanggalLahirPegawai = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
-                            cmd.Parameters.AddWithValue("@role", ComboBoxRolePegawai.SelectedValue);
-                            cmd.Parameters.AddWithValue("@namapegawai", NamaPegawaiText.Text);
-                            cmd.Parameters.AddWithValue("@alamatpegawai", AlamatPegawaiText.Text);
-                            cmd.Parameters.AddWithValue("@tanggal", tanggalLahirPegawai);
-                            cmd.Parameters.AddWithValue("@nomor", NomorPegawaiText.Text);
-                            cmd.Parameters.AddWithValue("@username", UsernameText.Text);
-                            cmd.Parameters.AddWithValue("@password", PasswordText.Text);
-                            cmd.ExecuteNonQuery();
-                            conn.Close();
-                            GetRecords();
-                            MessageBox.Show("Berhasil ditambahkan", "Success");
-                            ClearData();
-                        }
-                    }
-                    catch(Exception err)
+                    // cek jika ada inputan yang kosong
+                    if (role == "" || role == "-- Pilih --" || NamaPegawaiText.Text == "" || AlamatPegawaiText.Text == "" || DatePickTglLahir.SelectedDate == null || NomorPegawaiText.Text == "" || UsernameText.Text == "" || PasswordText.Text == "")
                     {
-                        MessageBox.Show(err.Message);
+                        MessageBox.Show("Field tidak boleh kosong", "Warning");
                         conn.Close();
-                        return;
                     }
+                    else
+                    {
+                        string tanggalLahirPegawai = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
+                        cmd.Parameters.AddWithValue("@role", ComboBoxRolePegawai.SelectedValue);
+                        cmd.Parameters.AddWithValue("@namapegawai", NamaPegawaiText.Text);
+                        cmd.Parameters.AddWithValue("@alamatpegawai", AlamatPegawaiText.Text);
+                        cmd.Parameters.AddWithValue("@tanggal", tanggalLahirPegawai);
+                        cmd.Parameters.AddWithValue("@nomor", NomorPegawaiText.Text);
+                        cmd.Parameters.AddWithValue("@username", UsernameText.Text);
+                        cmd.Parameters.AddWithValue("@password", PasswordText.Text);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        GetRecords();
+                        MessageBox.Show("Berhasil ditambahkan", "Success");
+                        ClearData();
+                    }                  
                 }
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
+                conn.Close();
                 return;
             }
         }  
@@ -265,9 +257,17 @@ namespace KouveePetShop
             }
             catch(Exception err)
             {
-                MessageBox.Show(err.Message);
-                conn.Close();
-                return;
+                if (err is ConstraintException || err is MySqlException)
+                {
+                    MessageBox.Show("Data ini masih digunakan oleh tabel yang lain, silahkan pilih data yang lainnya!", "Warning");
+                    conn.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show(err.Message);
+                    conn.Close();
+                }
             }   
         }
 

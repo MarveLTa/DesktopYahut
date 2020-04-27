@@ -19,9 +19,26 @@ namespace KouveePetShop
     /// </summary>
     public partial class UiDashboard : Window
     {
+        CrudSupplier CS = new CrudSupplier();
         public UiDashboard()
         {
             InitializeComponent();
+            SendValueRole(RoleText.Text);
+        }
+
+        public void GetValueRole(string value)
+        {
+            RoleText.Text = value;
+           // roleValue = RoleText.Text;           
+        }
+
+        public string SendValueRole(string value)
+        {
+            string roleValue;
+
+            roleValue = value;
+
+            return roleValue;
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
@@ -96,6 +113,10 @@ namespace KouveePetShop
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
+
+                    //valueRole = 
+                    //CS.GetValueRole(role);
+
                     GridPrincipal.Children.Add(new CrudSupplier());
                     break;
                 case 6:

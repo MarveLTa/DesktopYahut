@@ -3,10 +3,198 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:KouveePetShop"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="900" d:DesignWidth="824">
+    <Grid Background="LightBlue">
+        <TextBlock Text="Customer" FontSize="20" Margin="350 15" HorizontalAlignment="Center"/>
+
+        <GroupBox Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="CustomerService" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Customer" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="ID Customer" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="IdCustomerText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center" IsReadOnly="True"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Nama Customer" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="NamaCustomerText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Alamat Customer" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="AlamatCustomerText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Tanggal Lahir Customer (mm/dd/yyyy)" Margin="10 10" VerticalAlignment="Center" FontSize="15" TextWrapping="Wrap"/>
+                    <DatePicker Grid.Column="1" x:Name="DatePickTglLahir" Margin="5 5"></DatePicker>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="No.Telp Customer" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <TextBox x:Name="NomorCustomerText" Grid.Column="2" Margin="10 10" Padding="2" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Status" Margin="10 10" VerticalAlignment="Center" FontSize="15"/>
+                    <ComboBox x:Name="ComboBoxStatus" Grid.Column="1" Margin="10 10" FontSize="15" SelectedValuePath="Content">
+                        <ComboBoxItem IsSelected="True" FontSize="15">-- Pilih --</ComboBoxItem>
+                        <ComboBoxItem FontSize="15">Non Member</ComboBoxItem>
+                        <ComboBoxItem FontSize="15">Member</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 80 0 0" Height="255">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Analog" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Log" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="235" VerticalScrollBarVisibility="Auto" SelectionChanged="LogsDataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 345 0 0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="CallToAction" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Pilih Aksi" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnTambah" Grid.Column="0" Content="Tambah" Margin="10 10" Click="BtnTambah_Click"/>
+                    <Button x:Name="BtnEdit" Grid.Column="1" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnHapus" Grid.Column="0" Content="Hapus" Margin="10 10" Click="BtnHapus_Click"/>
+                    <Button x:Name="BtnTampil" Grid.Column="1" Content="Tampil" Margin="10 10" Click="BtnTampil_Click" Grid.ColumnSpan="2"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 470 10 10" Height="35" Width="400">
+            <StackPanel Orientation="Horizontal">
+                <Grid Width="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Cari Customer : " VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="15" Margin="10" Grid.Column="0"></TextBlock>
+                    <TextBox x:Name="CariCustomerText" Grid.Column="1" Background="White" Padding="2" TextChanged="CariCustomerText_TextChanged" VerticalAlignment="Center"></TextBox>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 515 10 10" Width="805" Height="340">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Database" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
+                    <TextBlock Text="Data Customer" FontSize="15"/>
+                </StackPanel>
+            </GroupBox.Header>
+            <StackPanel>
+                <ScrollViewer>
+                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="320" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID CUSTOMER" Binding="{Binding ID_CUSTOMER}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn CanUserSort="False" Header="NAMA CUSTOMER" Binding="{Binding NAMA_CUSTOMER}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="ALAMAT CUSTOMER" Binding="{Binding ALAMAT_CUSTOMER}" Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="TANGGAL LAHIR CUSTOMER" Binding="{Binding TANGGALLAHIR_CUSTOMER}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="NO.TELP CUSTOMER" Binding="{Binding NOTELP_CUSTOMER}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="STATUS" Binding="{Binding STATUS}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>

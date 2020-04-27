@@ -22,10 +22,12 @@ namespace KouveePetShop
     public partial class UiLogin : Window
     {       
         UiDashboard dashboardAdmin = new UiDashboard();
+        CrudSupplier CS = new CrudSupplier();
         public UiLogin()
         {
             InitializeComponent();          
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -52,23 +54,23 @@ namespace KouveePetShop
                     {
                         string user = ds.Tables[0].Rows[0]["NAMA_PEGAWAI"].ToString() + " - " + ds.Tables[0].Rows[0]["ROLE"].ToString();
                         dashboardAdmin.RoleText.Text = user;
+                        //CS.cobaText.Text = user;
+                       // dashboardAdmin.roleValue = user;
 
                         // User akan diarahkan berdasar pada role
                         string role = ds.Tables[0].Rows[0]["ROLE"].ToString();
                         switch (role)
                         {
                             case "Admin":
+                               // dashboardAdmin.GetValueRole(user);
+                                dashboardAdmin.SendValueRole(user);
+                                CS.GetValueRole(user);
                                 dashboardAdmin.Show();
                                 this.Close();
                                 break;
                             case "Kasir":
                                 UiKasir dashboardKasir = new UiKasir();
                                 dashboardKasir.Show();
-                                this.Close();
-                                break;
-                            case "Customer Service":
-                                UiCustomerService dashboardCS = new UiCustomerService();
-                                dashboardCS.Show();
                                 this.Close();
                                 break;
                         } 
@@ -86,6 +88,16 @@ namespace KouveePetShop
                 MessageBox.Show(err.Message);
                 return;
             }
+        }
+
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

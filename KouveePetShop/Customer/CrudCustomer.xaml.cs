@@ -29,6 +29,8 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudCustomer()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace KouveePetShop
                 conn = new MySqlConnection(connection);
                 conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch (MySqlException e)
@@ -66,6 +69,25 @@ namespace KouveePetShop
             }
         }
 
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_CUSTOMER, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from customer", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
@@ -75,9 +97,26 @@ namespace KouveePetShop
                 //conn.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-                conn.Close();
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_CUSTOMER, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from customer", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -157,6 +196,7 @@ namespace KouveePetShop
                         cmd.ExecuteNonQuery();
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil ditambahkan", "Success");
                         ClearData();
                     }                    
@@ -173,9 +213,7 @@ namespace KouveePetShop
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                ds = new DataSet();
-
+            {               
                 // Cek jika user belum pilih data yang ingin diedit
                 if (IdCustomerText.Text == "")
                 {
@@ -184,25 +222,49 @@ namespace KouveePetShop
                 }
                 else
                 {
-                    conn.Open();
-                    string status = ((ComboBoxItem)ComboBoxStatus.SelectedItem).Content.ToString();
-                    string tanggalLahirCustomer = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
-
-                    adapter = new MySqlDataAdapter("update customer set NAMA_CUSTOMER = '" + NamaCustomerText.Text + "', ALAMAT_CUSTOMER = '" + AlamatCustomerText.Text + "', NOTELP_CUSTOMER = '" + NomorCustomerText.Text + "', TANGGALLAHIR_CUSTOMER = '" + tanggalLahirCustomer + "', STATUS = '" + ComboBoxStatus.SelectedValue + "' where ID_CUSTOMER = '" + IdCustomerText.Text + "'", conn);
-
-                    // Cek inputan user, kosong atau tidak
-                    if (string.IsNullOrEmpty(ComboBoxStatus.Text) || NamaCustomerText.Text == "" || DatePickTglLahir.SelectedDate == null || ComboBoxStatus.SelectedIndex == -1 || AlamatCustomerText.Text == "" || NomorCustomerText.Text == "" || status == "-- Pilih --")
+                    using(MySqlCommand cmd = new MySqlCommand())
                     {
-                        MessageBox.Show("Field tidak boleh kosong", "Warning");
-                        conn.Close();
-                    }
-                    else
-                    {
-                        adapter.Fill(ds, "customer");
-                        conn.Close();
-                        GetRecords();
-                        MessageBox.Show("Berhasil Diedit!", "Success");
-                        ClearData();
+                        try
+                        {
+                            conn.Open();
+                            string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
+                            string status = ((ComboBoxItem)ComboBoxStatus.SelectedItem).Content.ToString();
+                            string tanggalLahirCustomer = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
+
+                            cmd.CommandText = "UPDATE customer set NAMA_CUSTOMER = @namacustomer, ALAMAT_CUSTOMER = @alamat, NOTELP_CUSTOMER = @nomor, TANGGALLAHIR_CUSTOMER = @tanggal, STATUS = @status, UPDATE_AT = @updateAt WHERE ID_CUSTOMER = @idcustomer";
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Connection = conn;
+
+                            // Cek inputan user, kosong atau tidak
+                            if (string.IsNullOrEmpty(ComboBoxStatus.Text) || NamaCustomerText.Text == "" || DatePickTglLahir.SelectedDate == null || ComboBoxStatus.SelectedIndex == -1 || AlamatCustomerText.Text == "" || NomorCustomerText.Text == "" || status == "-- Pilih --")
+                            {
+                                MessageBox.Show("Field tidak boleh kosong", "Warning");
+                                conn.Close();
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@idcustomer", IdCustomerText.Text);
+                                cmd.Parameters.AddWithValue("@namacustomer", NamaCustomerText.Text);
+                                cmd.Parameters.AddWithValue("alamat", AlamatCustomerText.Text);
+                                cmd.Parameters.AddWithValue("@nomor", NomorCustomerText.Text);
+                                cmd.Parameters.AddWithValue("@tanggal", tanggalLahirCustomer);
+                                cmd.Parameters.AddWithValue("@status", ComboBoxStatus.SelectedValue);
+                                cmd.Parameters.AddWithValue("@updateAt", tanggalUpdate);
+
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                                GetRecords();
+                                GetLogsRecords();
+                                MessageBox.Show("Berhasil Diedit!", "Success");
+                                ClearData();
+                            }
+                        }
+                        catch(Exception err)
+                        {
+                            MessageBox.Show(err.Message);
+                            conn.Close();
+                            return;
+                        }
                     }
                 }
             }
@@ -242,6 +304,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!", "Success");
                             ClearData();                         
                         }
@@ -289,11 +352,6 @@ namespace KouveePetShop
                 MessageBox.Show(d.Message);
             }
         }
-        private void LogsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void ClearData()
         {
             ComboBoxStatus.SelectedIndex = -1;

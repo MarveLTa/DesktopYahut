@@ -33,7 +33,7 @@
         </StackPanel>
 
         <Grid Margin="250 60 0 0">
-            <Grid x:Name="GridPrincipal"/>
+            <Grid x:Name="GridPrincipal" Background="LightBlue"/>
             <StackPanel>
                 <Grid Height="55">
                     <Grid.ColumnDefinitions>

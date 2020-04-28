@@ -29,6 +29,8 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudPegawai()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace KouveePetShop
                 conn = new MySqlConnection(connection);
                 conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch (MySqlException e)
@@ -55,10 +58,27 @@ namespace KouveePetShop
             {
                 //conn.Open();
                 DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
+                dt.Load(cmd.ExecuteReader());              
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_PEGAWAI, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from pegawai", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -71,6 +91,25 @@ namespace KouveePetShop
             try
             {
                 MySqlCommand cmd = new MySqlCommand("Select ID_PEGAWAI, ROLE, NAMA_PEGAWAI, ALAMAT_PEGAWAI, TANGGALLAHIR_PEGAWAI, NOTELP_PEGAWAI, USERNAME, PASSWORD from pegawai", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                DataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_PEGAWAI, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from pegawai", conn);
                 DataGrid.Items.Refresh();
                 conn.Open();
                 DataTable dt = new DataTable();
@@ -158,6 +197,7 @@ namespace KouveePetShop
                         cmd.ExecuteNonQuery();
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil ditambahkan", "Success");
                         ClearData();
                     }                  
@@ -176,9 +216,9 @@ namespace KouveePetShop
             try
             {
                 ds = new DataSet();
-
+                string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
                 // cek jika user belum memilih data yang ingin diedit
-                if(IdPegawaiText.Text == "")
+                if (IdPegawaiText.Text == "")
                 {
                     MessageBox.Show("Silahkan pilih data terlebih dahulu", "Warning");
                 }
@@ -187,7 +227,7 @@ namespace KouveePetShop
                     conn.Open();
                     string tanggalLahirPegawai = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
 
-                    adapter = new MySqlDataAdapter("update pegawai set ROLE = '" + ComboBoxRolePegawai.SelectedValue + "', NAMA_PEGAWAI = '" + NamaPegawaiText.Text + "', ALAMAT_PEGAWAI = '" + AlamatPegawaiText.Text + "',TANGGALLAHIR_PEGAWAI = '" + tanggalLahirPegawai +"', NOTELP_PEGAWAI = '" + NomorPegawaiText.Text + "', USERNAME = '" + UsernameText.Text + "', PASSWORD = '" + PasswordText.Text +"' where ID_PEGAWAI = '" + IdPegawaiText.Text + "'", conn);
+                    adapter = new MySqlDataAdapter("update pegawai set ROLE = '" + ComboBoxRolePegawai.SelectedValue + "', NAMA_PEGAWAI = '" + NamaPegawaiText.Text + "', ALAMAT_PEGAWAI = '" + AlamatPegawaiText.Text + "',TANGGALLAHIR_PEGAWAI = '" + tanggalLahirPegawai +"', NOTELP_PEGAWAI = '" + NomorPegawaiText.Text + "', USERNAME = '" + UsernameText.Text + "', PASSWORD = '" + PasswordText.Text +"', UPDATE_AT = '" + tanggalUpdate + "' where ID_PEGAWAI = '" + IdPegawaiText.Text + "'", conn);
 
                     string role = ((ComboBoxItem)ComboBoxRolePegawai.SelectedItem).Content.ToString();
                     // cek jika ada inputan yang kosong
@@ -201,6 +241,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "pegawai");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil diedit!", "Success");
                         ClearData();
                     }
@@ -243,6 +284,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!", "Success");
                             ClearData();
                         }

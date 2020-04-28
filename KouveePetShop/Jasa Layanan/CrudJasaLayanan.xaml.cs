@@ -28,6 +28,8 @@ namespace KouveePetShop
         private string connection;
         MySqlConnection conn;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudJasaLayanan()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace KouveePetShop
                 conn.Open();
                 FillComboBoxUkuranHewan();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch (MySqlException e)
@@ -72,23 +75,36 @@ namespace KouveePetShop
 
         private void TampilDataGrid()
         {
-            ds = new DataSet();
-
             //Tampil data ke DataGrid
-
-            adapter = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan", conn);
-
+            MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN, ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN from jasa_layanan", conn);
             try
             {
-                adapter.Fill(ds, "jasa_layanan");
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
                 conn.Close();
-                GetRecords();
+                DataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
                 MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_JASA_LAYANAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from jasa_layanan", conn);
+            try
+            {
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
                 conn.Close();
-                return;
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
             }
         }
 
@@ -96,7 +112,7 @@ namespace KouveePetShop
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan", conn);
+                MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN, ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN from jasa_layanan", conn);
                 DataGrid.Items.Refresh();
                 conn.Open();
                 DataTable dt = new DataTable();
@@ -111,6 +127,25 @@ namespace KouveePetShop
             }           
         }
 
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_JASA_LAYANAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from jasa_layanan", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void CariJasaLayananText_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -118,7 +153,7 @@ namespace KouveePetShop
                 //Fungsi untuk mencari hewan sesuai nama
                 // auto mencari data
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan where Nama_Jasa_Layanan LIKE '" + CariJasaLayananText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_JASA_LAYANAN, ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN from jasa_layanan where Nama_Jasa_Layanan LIKE '" + CariJasaLayananText.Text + "%'", conn);
                 adp.Fill(dt);
                 DataGrid.DataContext = dt;
             }
@@ -165,6 +200,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil ditambahkan");
                             ClearData();
                         } 
@@ -189,7 +225,7 @@ namespace KouveePetShop
             try
             {
                 ds = new DataSet();
-
+                string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
                 if (string.IsNullOrEmpty(ComboBoxIdUkuranHewan.Text) || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "")
                 {
                     MessageBox.Show("Field tidak boleh kosong!", "Warning");
@@ -198,7 +234,7 @@ namespace KouveePetShop
                 else
                 {
                     conn.Open();
-                    adapter = new MySqlDataAdapter("update jasa_layanan set ID_UKURAN_HEWAN = '" + ComboBoxIdUkuranHewan.SelectedValue + "', NAMA_JASA_LAYANAN = '" + NamaJasaLayananText.Text + "', HARGA_JASA_LAYANAN = '" + HargaJasaLayananText.Text + "' where ID_JASA_LAYANAN = '" + IdJasaLayananText.Text + "'", conn);
+                    adapter = new MySqlDataAdapter("update jasa_layanan set ID_UKURAN_HEWAN = '" + ComboBoxIdUkuranHewan.SelectedValue + "', NAMA_JASA_LAYANAN = '" + NamaJasaLayananText.Text + "', HARGA_JASA_LAYANAN = '" + HargaJasaLayananText.Text + "', UPDATE_AT = '" + tanggalUpdate + "' where ID_JASA_LAYANAN = '" + IdJasaLayananText.Text + "'", conn);
 
                     if (ComboBoxIdUkuranHewan.SelectedIndex == -1 || NamaJasaLayananText.Text == "" || HargaJasaLayananText.Text == "" || ComboBoxIdUkuranHewan.SelectedIndex == -1)
                     {
@@ -218,6 +254,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "jasa_layanan");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil Diedit!");
                         ClearData();
                     } 
@@ -258,6 +295,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!");
                             ClearData();
                         }
@@ -289,7 +327,7 @@ namespace KouveePetShop
         private void BtnTampil_Click(object sender, RoutedEventArgs e)
         {
             // Tampil semua data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN as 'ID JASA LAYANAN', ID_UKURAN_HEWAN as 'ID UKURAN HEWAN', NAMA_JASA_LAYANAN as 'NAMA JASA LAYANAN', HARGA_JASA_LAYANAN as 'HARGA JASA LAYANAN' from jasa_layanan", conn);
+            MySqlCommand cmd = new MySqlCommand("Select ID_JASA_LAYANAN, ID_UKURAN_HEWAN, NAMA_JASA_LAYANAN, HARGA_JASA_LAYANAN from jasa_layanan", conn);
             try
             {
                 conn.Open();
@@ -314,10 +352,10 @@ namespace KouveePetShop
                 DataRowView selected_row = gd.SelectedItem as DataRowView;
                 if (selected_row != null)
                 {
-                    IdJasaLayananText.Text = selected_row["ID JASA LAYANAN"].ToString();
-                    ComboBoxIdUkuranHewan.Text = selected_row["ID UKURAN HEWAN"].ToString();
-                    NamaJasaLayananText.Text = selected_row["NAMA JASA LAYANAN"].ToString();
-                    HargaJasaLayananText.Text = selected_row["HARGA JASA LAYANAN"].ToString();
+                    IdJasaLayananText.Text = selected_row["ID_JASA_LAYANAN"].ToString();
+                    ComboBoxIdUkuranHewan.Text = selected_row["ID_UKURAN_HEWAN"].ToString();
+                    NamaJasaLayananText.Text = selected_row["NAMA_JASA_LAYANAN"].ToString();
+                    HargaJasaLayananText.Text = selected_row["HARGA_JASA_LAYANAN"].ToString();
                 }
             }
             catch(Exception err)
@@ -328,6 +366,7 @@ namespace KouveePetShop
 
         private void ClearData()
         {
+            IdJasaLayananText.Clear();
             ComboBoxIdUkuranHewan.SelectedIndex = -1;
             NamaJasaLayananText.Clear();
             HargaJasaLayananText.Clear();

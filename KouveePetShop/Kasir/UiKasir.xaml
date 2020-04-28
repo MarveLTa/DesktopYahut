@@ -3,10 +3,71 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:KouveePetShop"
         mc:Ignorable="d"
-        Title="UiKasir" Height="450" Width="800">
-    <Grid>
-        
+        Title="UiKasir" Height="500" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Grid Background="#FFEEEEEE" MouseDown="Grid_MouseDown">
+        <StackPanel VerticalAlignment="Top" Background="Orange">
+            <Grid Background="#FF0069CE" Height="20"/>
+            <Grid Margin="5">
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock Text="KOUVEE PET SHOP" FontSize="22" VerticalAlignment="Center" Margin="20 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="BtnAccount" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" Click="BtnAccount_Click">
+                        <materialDesign:PackIcon Kind="Account"/>
+                    </Button>
+                    <Button x:Name="BtnBellNotif" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" Margin="0" Click="BtnBellNotif_Click">
+                        <materialDesign:PackIcon Kind="BellOutline"/>
+                    </Button>
+                    <Button x:Name="BtnExit" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Gray" Click="BtnExit_Click" ToolTip="Exit Application">
+                        <materialDesign:PackIcon Kind="Power"/>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+
+        </StackPanel>
+
+        <Grid Margin="250 60 0 0">
+            <Grid x:Name="GridPrincipal"/>
+        </Grid>
+        <Grid Width="250" HorizontalAlignment="Left" Background="LightGray">
+
+            <Grid Height="75" VerticalAlignment="Top">
+                <Border Background="Orange">
+                    <TextBlock x:Name="RoleText"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <materialDesign:TransitioningContent x:Name="TransitioningContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">
+                <Grid x:Name="GridCursor" Margin="0 100 0 0" Width="10" Background="#FF0069CE" HorizontalAlignment="left" Height="60" VerticalAlignment="Top"></Grid>
+            </materialDesign:TransitioningContent>
+            <ListView x:Name="ListViewMenu" Margin="0 100" Foreground="Black" SelectionChanged="ListViewMenu_SelectionChanged" SelectedIndex="0">
+                <!-- Produk -->
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="BoxVariant" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Produk" FontSize="25" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <!-- Jasa Layanan -->
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="DogService" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Jasa Layanan" FontSize="25" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <!-- Logout -->
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Logout" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Logout" FontSize="25" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>

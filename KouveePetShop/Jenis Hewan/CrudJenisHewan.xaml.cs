@@ -29,6 +29,8 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudJenisHewan()
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace KouveePetShop
                 conn = new MySqlConnection(connection);
                 conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
+                conn.Close();
             }
             catch (MySqlException e)
             {
@@ -88,6 +92,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil ditambahkan");
                             NamaJenisHewanText.Clear();
                         }
@@ -116,7 +121,9 @@ namespace KouveePetShop
                 {
                     conn.Open();
                     ds = new DataSet();
-                    adapter = new MySqlDataAdapter("update jenis_hewan set NAMA_JENIS = '" + NamaJenisHewanText.Text + "'where ID_JENIS_HEWAN = '" + IdJenisHewanText.Text + "'", conn);
+                    string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
+
+                    adapter = new MySqlDataAdapter("update jenis_hewan set NAMA_JENIS = '" + NamaJenisHewanText.Text + "', UPDATE_AT = '" + tanggalUpdate + "' where ID_JENIS_HEWAN = '" + IdJenisHewanText.Text + "'", conn);
 
                     if (NamaJenisHewanText.Text == "")
                     {
@@ -128,6 +135,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "jenis_hewan");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil Diedit!");
                         NamaJenisHewanText.Clear();
                         IdJenisHewanText.Clear();
@@ -168,6 +176,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!");
                             ClearData();
                         }
@@ -196,6 +205,33 @@ namespace KouveePetShop
             }
         }
 
+        private void BtnTampil_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Tampil data ke dataGrid
+                MySqlCommand cmd = new MySqlCommand("select ID_JENIS_HEWAN, NAMA_JENIS from jenis_hewan", conn);
+                try
+                {
+                    conn.Open();
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+                    conn.Close();
+
+                    DataGrid.DataContext = dt;
+                    ClearData();
+                }
+                catch (MySqlException d)
+                {
+                    MessageBox.Show(d.Message);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
@@ -205,9 +241,26 @@ namespace KouveePetShop
                 //conn.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-                conn.Close();
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_JENIS_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from jenis_hewan", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -233,34 +286,7 @@ namespace KouveePetShop
             {
                 MessageBox.Show(err.Message);
             }
-        }  
-
-        private void BtnTampil_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Tampil data ke dataGrid
-                MySqlCommand cmd = new MySqlCommand("select ID_JENIS_HEWAN, NAMA_JENIS from jenis_hewan", conn);
-                try
-                {
-                    conn.Open();
-                    DataTable dt = new DataTable();
-                    dt.Load(cmd.ExecuteReader());
-                    conn.Close();
-
-                    DataGrid.DataContext = dt;
-                    ClearData();
-                }
-                catch (MySqlException d)
-                {
-                    MessageBox.Show(d.Message);
-                }
-            }
-            catch(Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }          
-        }
+        }          
 
         private void GetRecords()
         {
@@ -279,6 +305,25 @@ namespace KouveePetShop
             {
                 MessageBox.Show(err.Message);
             }           
+        }
+
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_JENIS_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from jenis_hewan", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                DataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
         }
 
         private void ClearData()

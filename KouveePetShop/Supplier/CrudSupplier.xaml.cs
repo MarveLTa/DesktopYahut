@@ -41,6 +41,7 @@ namespace KouveePetShop
                 conn = new MySqlConnection(connection);
                 conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch(Exception err)
@@ -106,9 +107,26 @@ namespace KouveePetShop
                 //conn.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-                conn.Close();
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_SUPPLIER, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from supplier", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -121,6 +139,25 @@ namespace KouveePetShop
             try
             {
                 MySqlCommand cmd = new MySqlCommand("select ID_SUPPLIER, NAMA_SUPPLIER, NOTELP_SUPPLIER, ALAMAT_SUPPLIER from supplier", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                DataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_SUPPLIER, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from supplier", conn);
                 DataGrid.Items.Refresh();
                 conn.Open();
                 DataTable dt = new DataTable();
@@ -163,6 +200,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil ditambahkan", "Success");
                             ClearData();
                         }
@@ -213,6 +251,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "supplier");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil Diedit!", "Success");
                         ClearData();
                     }
@@ -253,6 +292,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!", "Success");
                             ClearData();
                         }

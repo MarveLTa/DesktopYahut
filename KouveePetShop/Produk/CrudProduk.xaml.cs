@@ -33,7 +33,7 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
-
+        DateTime tanggal = DateTime.Now;
         public CrudProduk()
         {
             InitializeComponent();
@@ -42,7 +42,9 @@ namespace KouveePetShop
             {
                 connection = "Server=localhost; User Id=root;Password=;Database=petshop;Allow Zero Datetime=True";
                 conn = new MySqlConnection(connection);
+                conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
             }
             catch (MySqlException e)
             {
@@ -53,7 +55,6 @@ namespace KouveePetShop
 
         private void TampilDataGrid()
         {
-            conn.Open();
             ds = new DataSet();
             try
             {
@@ -68,6 +69,63 @@ namespace KouveePetShop
                 MessageBox.Show(d.Message);
                 conn.Close();
                 return;
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_PRODUK, CREATED_AT, UPDATED_AT, DELETED_AT, CREATED_BY, UPDATED_BY from produk", conn);
+            try
+            {
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+                
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void GetRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                DataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_PRODUK, CREATED_AT, UPDATED_AT, DELETED_AT, CREATED_BY, UPDATED_BY from produk", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
             }
         }
 
@@ -159,6 +217,7 @@ namespace KouveePetShop
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
                                 GetRecords();
+                                GetLogsRecords();
                                 MessageBox.Show("Berhasil ditambahkan");
                                 ClearData();
                             }
@@ -222,7 +281,9 @@ namespace KouveePetShop
                             picBytes = br.ReadBytes((int)fs.Length);
                             conn.Open();
 
-                            cmd.CommandText = "UPDATE produk set NAMA_PRODUK = @namaproduk, HARGA_PRODUK = @hargaproduk, SATUAN = @satuan, JUMLAH_PRODUK = @jumlahproduk, JUMLAH_MINIMUM_PRODUK = @jumlahminimum, GAMBAR_PRODUK = @gambarproduk WHERE ID_PRODUK = @idproduk";
+                            string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
+
+                            cmd.CommandText = "UPDATE produk set NAMA_PRODUK = @namaproduk, HARGA_PRODUK = @hargaproduk, SATUAN = @satuan, JUMLAH_PRODUK = @jumlahproduk, JUMLAH_MINIMUM_PRODUK = @jumlahminimum, GAMBAR_PRODUK = @gambarproduk, UPDATED_AT = @updatedAt WHERE ID_PRODUK = @idproduk";
                             cmd.CommandType = CommandType.Text;
                             cmd.Connection = conn;
 
@@ -240,10 +301,12 @@ namespace KouveePetShop
                                 cmd.Parameters.AddWithValue("@jumlahproduk", JumlahProdukText.Text);
                                 cmd.Parameters.AddWithValue("@jumlahminimum", JumlahMinimumProdukText.Text);
                                 cmd.Parameters.AddWithValue("@gambarproduk", picBytes);
+                                cmd.Parameters.AddWithValue("@updatedAt", tanggalUpdate);
 
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
                                 GetRecords();
+                                GetLogsRecords();
                                 MessageBox.Show("Berhasil Diedit!");
                                 ClearData();
                             }
@@ -288,6 +351,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!");
                             ClearData();
                         }
@@ -334,27 +398,7 @@ namespace KouveePetShop
             {
                 MessageBox.Show(d.Message);
             }
-        }
-
-        private void GetRecords()
-        {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
-        }
-
+        }       
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try

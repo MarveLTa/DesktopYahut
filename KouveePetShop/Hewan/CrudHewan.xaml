@@ -6,10 +6,19 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:KouveePetShop"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="824">
+             d:DesignHeight="900" d:DesignWidth="824">
+    
+    <!-- Untuk center header pada DataGrid -->
+    <UserControl.Resources>
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid Background="LightBlue">
         <TextBlock Text="Hewan" FontSize="20" Margin="380 15"/>
-        <GroupBox Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400">
+        <GroupBox Margin="10 80 10 10"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Height="350">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Cat" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
@@ -65,7 +74,7 @@
                 </Grid>
             </StackPanel>
         </GroupBox>
-        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="10 410 0 0">
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 370 0 0">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="CallToAction" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
@@ -93,7 +102,7 @@
             </StackPanel>
         </GroupBox>
 
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 80 10 10" Height="35" Width="400">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 496 10 10" Height="35" Width="400">
             <StackPanel Orientation="Horizontal">
                 <Grid Width="400">
                     <Grid.ColumnDefinitions>
@@ -106,7 +115,7 @@
             </StackPanel>
         </Grid>
 
-        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="420 120 10 10" Width="400" Height="450">
+        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 540 0 0" Width="805" Height="300">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Database" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
@@ -114,37 +123,37 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="435" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="290" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID HEWAN" Binding="{Binding ID_HEWAN}"  Width="auto">
+                        <DataGridTextColumn Header="ID HEWAN" Binding="{Binding ID_HEWAN}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="ID JENIS HEWAN" Binding="{Binding ID_JENIS_HEWAN}"  Width="auto">
+                        <DataGridTextColumn Header="ID JENIS HEWAN" Binding="{Binding ID_JENIS_HEWAN}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="ID CUSTOMER" Binding="{Binding ID_CUSTOMER}"  Width="auto">
+                        <DataGridTextColumn Header="ID CUSTOMER" Binding="{Binding ID_CUSTOMER}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn CanUserSort="False" Header="NAMA PRODUK" Binding="{Binding NAMA_HEWAN}"  Width="auto">
+                        <DataGridTextColumn CanUserSort="False" Header="NAMA PRODUK" Binding="{Binding NAMA_HEWAN}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="TANGGAL LAHIR" Binding="{Binding TANGGALLAHIR_HEWAN}" Width="auto">
+                        <DataGridTextColumn Header="TANGGAL LAHIR" Binding="{Binding TANGGALLAHIR_HEWAN}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
@@ -156,7 +165,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" Margin="10 580 0 0" Height="160">
+        <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 80 0 0" Height="280">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Analog" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
@@ -164,7 +173,54 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="135" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="260" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID HEWAN" Binding="{Binding ID_HEWAN}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="CREATED AT" Binding="{Binding CREATED_AT}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn CanUserSort="False" Header="UPDATE AT" Binding="{Binding UPDATE_AT}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="DELETE AT" Binding="{Binding DELETE_AT}" Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="CREATED BY" Binding="{Binding CREATED_BY}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="UPDATED BY" Binding="{Binding UPDATED_BY}"  Width="auto">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </GroupBox>
     </Grid>

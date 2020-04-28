@@ -144,8 +144,7 @@
                     </StackPanel>
                 </GroupBox.Header>
                 <StackPanel>
-                    <ScrollViewer>
-                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="250" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                    <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="240"  SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" VerticalScrollBarVisibility="Auto" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID PRODUK" Binding="{Binding ID PRODUK}"  Width="auto">
                                 <DataGridTextColumn.ElementStyle>
@@ -182,6 +181,20 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+
+                            <!-- Contoh binding 2 data sekaligus -->
+                            <!--<DataGridTemplateColumn Header="Coba">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Path=ID PRODUK}"/>
+                                                <TextBlock Text=" - "/>
+                                                <TextBlock Text="{Binding Path=NAMA PRODUK}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>-->
+
                             <DataGridTemplateColumn Header="GAMBAR">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -191,7 +204,6 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    </ScrollViewer>
                 </StackPanel>
             </GroupBox>
             <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="420 80 0 0" Height="250">
@@ -202,7 +214,54 @@
                     </StackPanel>
                 </GroupBox.Header>
                 <StackPanel>
-                    <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="235" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray"></DataGrid>
+                    <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="200" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID PRODUK" Binding="{Binding ID_PRODUK}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="CREATED AT" Binding="{Binding CREATED_AT}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn CanUserSort="False" Header="UPDATE AT" Binding="{Binding UPDATED_AT}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="DELETE AT" Binding="{Binding DELETED_AT}" Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="CREATED BY" Binding="{Binding CREATED_BY}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="UPDATED BY" Binding="{Binding UPDATED_BY}"  Width="auto">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </GroupBox>
         </Grid>

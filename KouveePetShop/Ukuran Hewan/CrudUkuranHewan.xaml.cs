@@ -29,6 +29,8 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudUkuranHewan()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace KouveePetShop
                 conn = new MySqlConnection(connection);
                 conn.Open();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch (MySqlException e)
@@ -84,6 +87,25 @@ namespace KouveePetShop
             }
         }
 
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_UKURAN_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from ukuran_hewan", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                DataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
@@ -93,9 +115,26 @@ namespace KouveePetShop
                 //conn.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-                conn.Close();
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_UKURAN_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from ukuran_hewan", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -140,6 +179,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil ditambahkan", "Success");
                             ClearData();                            
                         }
@@ -180,7 +220,8 @@ namespace KouveePetShop
                 {
                     conn.Open();
                     ds = new DataSet();
-                    adapter = new MySqlDataAdapter("update ukuran_hewan set NAMA_UKURAN = '" + ComboBoxUkuranHewan.SelectedValue + "'where ID_UKURAN_HEWAN = '" + IdUkuranHewanText.Text + "'", conn);
+                    string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
+                    adapter = new MySqlDataAdapter("update ukuran_hewan set NAMA_UKURAN = '" + ComboBoxUkuranHewan.SelectedValue + "', UPDATE_AT = '" + tanggalUpdate + "' where ID_UKURAN_HEWAN = '" + IdUkuranHewanText.Text + "'", conn);
 
                     if (ComboBoxUkuranHewan.SelectedValue.ToString() == "" || ComboBoxUkuranHewan.SelectedValue.ToString() == "-- Pilih --")
                     {
@@ -192,6 +233,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "ukuran_hewan");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil Diedit!", "Success");
                         ClearData();
                     }
@@ -232,6 +274,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!", "Success");
                             ClearData();
                         }

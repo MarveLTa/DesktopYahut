@@ -22,6 +22,7 @@ namespace KouveePetShop
     public partial class UiLogin : Window
     {       
         UiDashboard dashboardAdmin = new UiDashboard();
+        UiKasir dashboardKasir = new UiKasir();
         CrudSupplier CS = new CrudSupplier();
         public UiLogin()
         {
@@ -54,6 +55,8 @@ namespace KouveePetShop
                     {
                         string user = ds.Tables[0].Rows[0]["NAMA_PEGAWAI"].ToString() + " - " + ds.Tables[0].Rows[0]["ROLE"].ToString();
                         dashboardAdmin.RoleText.Text = user;
+                        dashboardKasir.RoleText.Text = user;
+
                         //CS.cobaText.Text = user;
                        // dashboardAdmin.roleValue = user;
 
@@ -69,7 +72,6 @@ namespace KouveePetShop
                                 this.Close();
                                 break;
                             case "Kasir":
-                                UiKasir dashboardKasir = new UiKasir();
                                 dashboardKasir.Show();
                                 this.Close();
                                 break;

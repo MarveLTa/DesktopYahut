@@ -29,6 +29,8 @@ namespace KouveePetShop
         MySqlConnection conn;
         MySqlCommand cmd;
 
+        DateTime tanggal = DateTime.Now;
+
         public CrudHewan()
         {
             InitializeComponent();
@@ -41,6 +43,7 @@ namespace KouveePetShop
                 FillComboBoxJenisHewan();
                 FillComboBoxCustomer();
                 TampilDataGrid();
+                TampilDataGridLog();
                 conn.Close();
             }
             catch (MySqlException e)
@@ -157,6 +160,25 @@ namespace KouveePetShop
             }
         }
 
+        private void GetLogsRecords()
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("select ID_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from hewan", conn);
+                DataGrid.Items.Refresh();
+                conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                conn.Close();
+
+                LogsDataGrid.DataContext = dt;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
@@ -166,9 +188,26 @@ namespace KouveePetShop
                 //conn.Open();
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-                conn.Close();
 
                 DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+        }
+
+        private void TampilDataGridLog()
+        {
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("select ID_HEWAN, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from hewan", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                LogsDataGrid.DataContext = dt;
             }
             catch (MySqlException d)
             {
@@ -206,6 +245,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil ditambahkan", "Success");
                             ClearData();
                         }
@@ -228,7 +268,7 @@ namespace KouveePetShop
             try
             {
                 ds = new DataSet();
-
+                string tanggalUpdate = tanggal.ToString("yyyy-MM-dd H:mm:ss");
                 // Cek jika user belum pilih data yang ingin diedit
                 if (string.IsNullOrEmpty(ComboBoxIdJenisHewan.Text) || string.IsNullOrEmpty(ComboBoxIdCustomer.Text) || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null)
                 {
@@ -240,7 +280,7 @@ namespace KouveePetShop
                     conn.Open();
                     string tanggalLahirHewan = DatePickTglLahir.SelectedDate.Value.ToString("yyyy-MM-dd");
 
-                    adapter = new MySqlDataAdapter("update hewan set ID_JENIS_HEWAN = '" + ComboBoxIdJenisHewan.SelectedValue + "', ID_CUSTOMER = '" + ComboBoxIdCustomer.SelectedValue + "', NAMA_HEWAN = '" + NamaHewanText.Text + "', TANGGALLAHIR_HEWAN = '" + tanggalLahirHewan + "' where ID_HEWAN = '" + IdHewanText.Text + "'", conn);
+                    adapter = new MySqlDataAdapter("update hewan set ID_JENIS_HEWAN = '" + ComboBoxIdJenisHewan.SelectedValue + "', ID_CUSTOMER = '" + ComboBoxIdCustomer.SelectedValue + "', NAMA_HEWAN = '" + NamaHewanText.Text + "', TANGGALLAHIR_HEWAN = '" + tanggalLahirHewan + "', UPDATE_AT = '" + tanggalUpdate + "' where ID_HEWAN = '" + IdHewanText.Text + "'", conn);
 
                     // Cek inputan user, kosong atau tidak
                     if (ComboBoxIdJenisHewan.SelectedIndex == -1 || ComboBoxIdCustomer.SelectedIndex == -1 || NamaHewanText.Text == "" || DatePickTglLahir.SelectedDate == null)
@@ -253,6 +293,7 @@ namespace KouveePetShop
                         adapter.Fill(ds, "hewan");
                         conn.Close();
                         GetRecords();
+                        GetLogsRecords();
                         MessageBox.Show("Berhasil Diedit!", "Success");
                         ClearData();
                     }
@@ -294,6 +335,7 @@ namespace KouveePetShop
                             cmd.ExecuteNonQuery();
                             conn.Close();
                             GetRecords();
+                            GetLogsRecords();
                             MessageBox.Show("Berhasil Dihapus!", "Success");
                             ClearData();
                         }

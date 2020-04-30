@@ -95,6 +95,12 @@
     <Compile Include="Kasir\UiKasir.xaml.cs">
       <DependentUpon>UiKasir.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Kasir\Transaksi\TransaksiProduk.xaml.cs">
+      <DependentUpon>TransaksiProduk.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\Transaksi\TransaksiJasaLayanan.xaml.cs">
+      <DependentUpon>TransaksiJasaLayanan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UiLogin.xaml.cs">
       <DependentUpon>UiLogin.xaml</DependentUpon>
     </Compile>
@@ -133,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Kasir\UiKasir.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\Transaksi\TransaksiProduk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\Transaksi\TransaksiJasaLayanan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,9 +200,7 @@
   <ItemGroup>
     <Resource Include="Pictures\home.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Kasir\Fungsi\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

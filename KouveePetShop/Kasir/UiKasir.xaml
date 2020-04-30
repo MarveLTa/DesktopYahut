@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:KouveePetShop"
         mc:Ignorable="d"
-        Title="UiKasir" Height="500" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="UiKasir" Height="900" Width="1100" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid Background="#FFEEEEEE" MouseDown="Grid_MouseDown">
         <StackPanel VerticalAlignment="Top" Background="Orange">
             <Grid Background="#FF0069CE" Height="20"/>

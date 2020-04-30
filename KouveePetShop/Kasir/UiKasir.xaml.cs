@@ -43,10 +43,11 @@ namespace KouveePetShop
             {
                 case 0:
                     GridPrincipal.Children.Clear();
-                    //GridPrincipal.Children.Add();
+                    GridPrincipal.Children.Add(new TransaksiProduk());
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new TransaksiJasaLayanan());
                     break;
                 case 2:
                     string message = "Apakah anda yakin ingin keluar ?";

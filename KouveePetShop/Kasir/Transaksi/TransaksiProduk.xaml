@@ -6,7 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:KouveePetShop"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="824">
+             d:DesignHeight="900" d:DesignWidth="1200">
 
     <!-- Untuk center header pada DataGrid -->
     <UserControl.Resources>
@@ -19,7 +19,7 @@
     <Grid Background="LightBlue">
         <TextBlock Text="Transaksi Produk" FontSize="20" Margin="300 15" HorizontalAlignment="Center"/>
 
-        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,90,0,0" Height="700" Width="800">
+        <GroupBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,90,0,0" Height="700" Width="1100">
             <GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Width="25" Margin="0 0 10 0"/>
@@ -27,13 +27,14 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="800" MaxWidth="800" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="800" MaxWidth="1100" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="No. Transaksi" Binding="{Binding NO_TRANSAKSI}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                     <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="TextWrapping" Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
@@ -71,28 +72,58 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        
-                        <DataGridTextColumn CanUserSort="False" Header="CS" Binding="{Binding ID_PEGAWAI}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
+
+                        <DataGridTemplateColumn Header="CS" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="HorizontalAlignment"  Value="Center"/>
                                 </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        
-                        <DataGridTextColumn Header="Kasir" Binding="{Binding ID_PEGAWAI2}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=ID_PEGAWAI}"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding Path=nama1}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Kasir" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="HorizontalAlignment"  Value="Center"/>
                                 </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn><DataGridTextColumn Header="Aksi" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Path=ID_PEGAWAI2}"/>
+                                        <TextBlock Text=" - "/>
+                                        <TextBlock Text="{Binding Path=nama2}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Aksi" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button x:Name="BtnProcess" Margin="3">
+                                            <materialDesign:PackIcon Kind="Payment"/>
+                                        </Button>
+                                        <Button x:Name="BtnEdit" Margin="3">
+                                            <materialDesign:PackIcon Kind="Edit"/>
+                                        </Button>
+                                        <Button x:Name="BtnDelete" Margin="3">
+                                            <materialDesign:PackIcon Kind="Delete"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

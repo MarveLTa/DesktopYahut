@@ -24,6 +24,7 @@
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Search" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Width="25" Margin="0 0 10 0"/>
                     <TextBox x:Name="CariTransaksiProdukText" Background="White" Padding="2" VerticalAlignment="Center" TextChanged="CariTransaksiProdukText_TextChanged" Width="350"/>
+                    <Button x:Name="BtnRefresh" Margin="620 0 0 0" Content="Refresh" Background="LightGray" Foreground="Black" Click="BtnRefresh_Click"/>
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
@@ -38,7 +39,17 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        
+
+                        <DataGridTextColumn Header="ID Transaksi" Binding="{Binding ID_TRANSAKSI}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
                         <DataGridTextColumn Header="Nama Hewan" Binding="{Binding NAMA_HEWAN}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
@@ -74,11 +85,6 @@
                         </DataGridTextColumn>
 
                         <DataGridTemplateColumn Header="CS" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
-                            <DataGridTemplateColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="HorizontalAlignment"  Value="Center"/>
-                                </Style>
-                            </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -91,11 +97,6 @@
                         </DataGridTemplateColumn>
 
                         <DataGridTemplateColumn Header="Kasir" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
-                            <DataGridTemplateColumn.CellStyle>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="HorizontalAlignment"  Value="Center"/>
-                                </Style>
-                            </DataGridTemplateColumn.CellStyle>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -111,13 +112,13 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="BtnProcess" Margin="3">
+                                        <Button x:Name="BtnProcess" Margin="3" Click="BtnProcess_Click">
                                             <materialDesign:PackIcon Kind="Payment"/>
                                         </Button>
-                                        <Button x:Name="BtnEdit" Margin="3">
+                                        <Button x:Name="BtnEdit" Margin="3" Click="BtnEdit_Click">
                                             <materialDesign:PackIcon Kind="Edit"/>
                                         </Button>
-                                        <Button x:Name="BtnDelete" Margin="3">
+                                        <Button x:Name="BtnDelete" Margin="3" Click="BtnDelete_Click">
                                             <materialDesign:PackIcon Kind="Delete"/>
                                         </Button>
                                     </StackPanel>

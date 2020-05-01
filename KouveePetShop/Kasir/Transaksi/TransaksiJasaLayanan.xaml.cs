@@ -20,6 +20,7 @@ namespace KouveePetShop
     /// </summary>
     public partial class TransaksiJasaLayanan : UserControl
     {
+        public string Username;
         public TransaksiJasaLayanan()
         {
             InitializeComponent();

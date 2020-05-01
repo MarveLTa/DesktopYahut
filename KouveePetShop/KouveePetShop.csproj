@@ -74,6 +74,9 @@
     <Compile Include="Customer\CrudCustomer.xaml.cs">
       <DependentUpon>CrudCustomer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Kasir\EditHewanTransaksi.xaml.cs">
+      <DependentUpon>EditHewanTransaksi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pegawai\CrudPegawai.xaml.cs">
       <DependentUpon>CrudPegawai.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,9 @@
     <Compile Include="UiLogin.xaml.cs">
       <DependentUpon>UiLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UiProsesTransaksi.xaml.cs">
+      <DependentUpon>UiProsesTransaksi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ukuran Hewan\CrudUkuranHewan.xaml.cs">
       <DependentUpon>CrudUkuranHewan.xaml</DependentUpon>
     </Compile>
@@ -111,6 +117,10 @@
       <DependentUpon>UiDashboard.xaml</DependentUpon>
     </Compile>
     <Page Include="Customer\CrudCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\EditHewanTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UiLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UiProsesTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

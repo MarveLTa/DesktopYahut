@@ -122,15 +122,22 @@ namespace KouveePetShop
         }
 
         private void Diskon()
-        {
+        {         
             try
             {
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE transaksi tr SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * (10 / 100)) FROM detail_transaksi_produk dt, customer cr WHERE tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND cr.STATUS LIKE 'MEMBER')";
+                    cmdMember.CommandText = "UPDATE transaksi tr SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * (10 / 100)) FROM detail_transaksi_produk dt, customer cr WHERE tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'M%')";
                     cmdMember.ExecuteNonQuery();
                 }
+
+                using (MySqlCommand cmdNonMember = new MySqlCommand())
+                {
+                    cmdNonMember.Connection = conn;
+                    cmdNonMember.CommandText = "update transaksi tr, customer cr set DISKON = 0 WHERE tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'Non Member' ";
+                    cmdNonMember.ExecuteNonQuery();
+                }  
             }
             catch (Exception err)
             {

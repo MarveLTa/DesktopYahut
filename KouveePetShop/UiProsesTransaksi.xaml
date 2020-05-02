@@ -66,7 +66,7 @@
                 <StackPanel>
                     <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="150" VerticalScrollBarVisibility="Auto"  CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="PRODUK" Binding="{Binding NAMA_PRODUK}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
+                            <DataGridTextColumn Header="PRODUK" Binding="{Binding nama}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -74,7 +74,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="JUMLAH" Binding="{Binding JUMLAH}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
+                            <DataGridTextColumn Header="JUMLAH" Binding="{Binding jumlah}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />

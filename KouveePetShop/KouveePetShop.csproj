@@ -74,6 +74,9 @@
     <Compile Include="Customer\CrudCustomer.xaml.cs">
       <DependentUpon>CrudCustomer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditProdukTransaksi.xaml.cs">
+      <DependentUpon>EditProdukTransaksi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Kasir\EditHewanTransaksi.xaml.cs">
       <DependentUpon>EditHewanTransaksi.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,10 @@
       <DependentUpon>UiDashboard.xaml</DependentUpon>
     </Compile>
     <Page Include="Customer\CrudCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditProdukTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

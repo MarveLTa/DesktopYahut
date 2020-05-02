@@ -62,8 +62,8 @@ namespace KouveePetShop
             // Tampil data ke dataGrid
             MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, dt.TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr " +
                 "JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI " +
-                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN J" +
-                "OIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
+                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN " +
+                "JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
                 "JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI " +
                 "where tr.NO_TRANSAKSI LIKE 'PR%'", conn);
             try
@@ -82,26 +82,12 @@ namespace KouveePetShop
 
         public void GetRecords()
         {
-            // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, dt.TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr " +
-                "JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI " +
-                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN J" +
-                "OIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
-                "JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI " +
-                "where tr.NO_TRANSAKSI LIKE 'PR%'", conn);
-            try
-            {
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (MySqlException d)
-            {
-                MessageBox.Show(d.Message);
-            }
+            conn.Open();
+            SubTotal();
+            Diskon();
+            Total();
+            TampilDataGrid();
+            conn.Close();
         }
 
         private void SubTotal()
@@ -198,12 +184,14 @@ namespace KouveePetShop
 
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
+            EditProdukTransaksi edtPr = new EditProdukTransaksi();
             EditHewanTransaksi edt = new EditHewanTransaksi();
             DataRowView selected_row = DataGrid.SelectedItem as DataRowView;
             if(selected_row != null)
             {
                 edt.IdTransaksiText.Text = selected_row["ID_TRANSAKSI"].ToString();
                 edt.NamaHewanText.Text = selected_row["NAMA_HEWAN"].ToString();
+
                 edt.Show();     
             }
         }
@@ -264,7 +252,7 @@ namespace KouveePetShop
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            GetRecords();
+            GetRecords();           
         }
     }
 }

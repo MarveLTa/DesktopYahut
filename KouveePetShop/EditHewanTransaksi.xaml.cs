@@ -99,7 +99,6 @@ namespace KouveePetShop
         private void BtnProduk_Click(object sender, RoutedEventArgs e)
         {
             EditProdukTransaksi edtPr = new EditProdukTransaksi();
-            edtPr.IdTransaksiText.Text = IdTransaksiText.Text;
 
             // Ambil jumlah dari tabel detail transaksi produk ke textbox
             conn.Open();

@@ -60,12 +60,7 @@ namespace KouveePetShop
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, dt.TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr " +
-                "JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI " +
-                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN " +
-                "JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
-                "JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI " +
-                "where tr.NO_TRANSAKSI LIKE 'PR%'", conn);
+            MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, sum(dt.TOTAL) as TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI where tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.NO_TRANSAKSI LIKE 'PR%' ORDER BY tr.NO_TRANSAKSI desc ", conn);
             try
             {
                 //conn.Open();
@@ -177,6 +172,7 @@ namespace KouveePetShop
             DataRowView selected_row = DataGrid.SelectedItem as DataRowView;
             if (selected_row != null)
             {
+                ui.idTransaksi = selected_row["ID_TRANSAKSI"].ToString();
                 ui.NamaHewanText.Text = selected_row["NAMA_HEWAN"].ToString();
                 ui.Show();
             }

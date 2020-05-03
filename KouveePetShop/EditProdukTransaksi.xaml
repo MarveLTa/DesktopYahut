@@ -16,14 +16,6 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Id Transaksi" Grid.Column="0" Margin="10 10"/>
-                    <TextBox x:Name="IdTransaksiText" Grid.Column="1" Margin="10 10" IsReadOnly="True"/>
-                </Grid>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -39,7 +31,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Nama Hewan Baru" Grid.Column="0" Margin="10 10"/>
+                    <TextBlock Text="Nama Produk Baru" Grid.Column="0" Margin="10 10"/>
                     <ComboBox x:Name="ComboBoxNamaProduk" Grid.Column="1" Margin="10 10"/>
                 </Grid>
 
@@ -49,18 +41,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Jumlah" Grid.Column="0" Margin="10 10"/>
-                    <TextBox x:Name="JumlahProdukText" Grid.Column="1" Margin="10 10" IsReadOnly="True"/>
+                    <TextBox x:Name="JumlahProdukText" Grid.Column="1" Margin="10 10"/>
                 </Grid>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="BtnEdit" Grid.Column="0" Content="Edit" Margin="10 10" Click="BtnEdit_Click"/>
                     <Button x:Name="BtnBatal" Grid.Column="1" Content="Batal" Margin="10 10" Click="BtnBatal_Click"/>
-                    <Button x:Name="BtnHewan" Grid.Column="2" Content="Hewan" Margin="10 10" Click="BtnHewan_Click"/>
                 </Grid>
             </StackPanel>
         </GroupBox>

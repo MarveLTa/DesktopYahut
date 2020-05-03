@@ -27,8 +27,11 @@ namespace KouveePetShop
         private string connection;
         MySqlConnection conn;
 
+        public string idTransaksi;
         public string namaHewan;
         public string jumlah;
+        public string idDetail;
+
         public EditProdukTransaksi()
         {
             InitializeComponent();
@@ -68,7 +71,7 @@ namespace KouveePetShop
         public void FillTextBoxJumlah()
         {
             // Ambil jumlah dari tabel detail transaksi produk ke textbox
-            string Query = "select dt.JUMLAH as JUMLAH from detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI WHERE tr.ID_TRANSAKSI = '" + IdTransaksiText.Text + "' ";
+            string Query = "select dt.JUMLAH as JUMLAH from detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI WHERE tr.ID_TRANSAKSI = '" + idTransaksi + "' ";
             MySqlCommand cmdTextBox = new MySqlCommand(Query, conn);
             MySqlDataReader reader;
             try
@@ -103,7 +106,7 @@ namespace KouveePetShop
             {
                 conn.Open();
                 TransaksiProduk tr = new TransaksiProduk();
-                adapter = new MySqlDataAdapter("update detail_transaksi_produk dt, transaksi tr SET dt.ID_PRODUK = '" + ComboBoxNamaProduk.SelectedValue + "' WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI AND tr.ID_TRANSAKSI = '" + IdTransaksiText.Text + "'", conn);
+                adapter = new MySqlDataAdapter("update detail_transaksi_produk dt, transaksi tr SET dt.ID_PRODUK = '" + ComboBoxNamaProduk.SelectedValue + "', dt.JUMLAH = '" + JumlahProdukText.Text + "' WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI AND tr.ID_TRANSAKSI = '" + idTransaksi + "' AND dt.ID_PEMBAYARAN_PRODUK = '" + idDetail + "'", conn);
                 adapter.Fill(ds, "detail_transaksi_produk");
                 MessageBox.Show("Edit berhasil!", "Success");
                 conn.Close();
@@ -114,15 +117,6 @@ namespace KouveePetShop
         private void BtnBatal_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void BtnHewan_Click(object sender, RoutedEventArgs e)
-        {
-            EditHewanTransaksi edt = new EditHewanTransaksi();
-            edt.IdTransaksiText.Text = IdTransaksiText.Text;
-            edt.NamaHewanText.Text = namaHewan;
-            edt.Show();
-            this.Close();
-        }
+        } 
     }
 }

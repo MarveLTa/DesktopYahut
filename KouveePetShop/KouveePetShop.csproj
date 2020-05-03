@@ -77,7 +77,7 @@
     <Compile Include="EditProdukTransaksi.xaml.cs">
       <DependentUpon>EditProdukTransaksi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Kasir\EditHewanTransaksi.xaml.cs">
+    <Compile Include="EditHewanTransaksi.xaml.cs">
       <DependentUpon>EditHewanTransaksi.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pegawai\CrudPegawai.xaml.cs">
@@ -127,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Kasir\EditHewanTransaksi.xaml">
+    <Page Include="EditHewanTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

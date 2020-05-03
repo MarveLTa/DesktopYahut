@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:KouveePetShop"
         mc:Ignorable="d"
-        Title="UiProsesTransaksi" Height="450" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" MouseDown="Window_MouseDown">
+        Title="UiProsesTransaksi" Height="450" Width="720" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" MouseDown="Window_MouseDown">
     
     <!-- Untuk center header pada DataGrid -->
     <Window.Resources>
@@ -56,7 +56,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="10 60 10 10" Height="190">
+            <GroupBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="420" Margin="10 60 10 10" Height="190">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="BoxVariant" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="0 0 5 0"/>
@@ -66,7 +66,15 @@
                 <StackPanel>
                     <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="150" VerticalScrollBarVisibility="Auto"  CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="PRODUK" Binding="{Binding nama}" HeaderStyle="{StaticResource CenterGridHeaderStyle}"  Width="*">
+                            <DataGridTextColumn Header="PRODUK" Binding="{Binding ID_PEMBAYARAN_PRODUK}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*" Visibility="Hidden">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            
+                            <DataGridTextColumn Header="PRODUK" Binding="{Binding nama}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -81,6 +89,21 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
+
+                            <DataGridTemplateColumn Header="Aksi" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="BtnEdit" Margin="3" Click="BtnEdit_Click">
+                                                <materialDesign:PackIcon Kind="Edit"/>
+                                            </Button>
+                                            <Button x:Name="BtnDelete" Margin="3" Click="BtnDelete_Click">
+                                                <materialDesign:PackIcon Kind="Delete"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

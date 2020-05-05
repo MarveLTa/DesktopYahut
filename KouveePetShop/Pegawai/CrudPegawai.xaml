@@ -212,7 +212,7 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="250" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="220" VerticalScrollBarVisibility="Auto" SelectionChanged="DataGrid_SelectionChanged" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID PEGAWAI" Binding="{Binding ID_PEGAWAI}"  Width="auto">
                             <DataGridTextColumn.ElementStyle>
@@ -221,13 +221,15 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="ROLE PEGAWAI" Binding="{Binding ROLE}"  Width="auto">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+
+                        <DataGridTemplateColumn Header="ROLE PEGAWAI" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=ROLE}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                         <DataGridTextColumn CanUserSort="False" Header="NAMA PEGAWAI" Binding="{Binding NAMA_PEGAWAI}"  Width="auto">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">

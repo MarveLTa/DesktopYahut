@@ -31,7 +31,6 @@ namespace KouveePetShop
         public TransaksiProduk()
         {
             InitializeComponent();
-
             try
             {
                 connection = "Server=localhost; User Id=root;Password=;Database=petshop;Allow Zero Datetime=True";
@@ -49,18 +48,10 @@ namespace KouveePetShop
             }
         }
 
-        public static T IsWindowOpen<T>(string name = null)
-    where T : Window
-        {
-            var windows = Application.Current.Windows.OfType<T>();
-            return string.IsNullOrEmpty(name) ? windows.FirstOrDefault() : windows.FirstOrDefault(w => w.Name.Equals(name));
-        }
-
-
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, sum(dt.TOTAL) as TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI where tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.NO_TRANSAKSI LIKE 'PR%' ORDER BY tr.NO_TRANSAKSI desc ", conn);
+            MySqlCommand cmd = new MySqlCommand("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, sum(dt.TOTAL) as TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI LEFT JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI where tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.NO_TRANSAKSI LIKE 'PR%' GROUP BY tr.NO_TRANSAKSI ORDER BY tr.ID_TRANSAKSI DESC ", conn);
             try
             {
                 //conn.Open();
@@ -109,14 +100,14 @@ namespace KouveePetShop
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE transaksi tr SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * (10 / 100)) FROM detail_transaksi_produk dt, customer cr WHERE tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'M%')";
+                    cmdMember.CommandText = "UPDATE transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * 10 / 100) FROM detail_transaksi_produk dt WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI) WHERE cr.STATUS LIKE 'Member' AND tr.NO_TRANSAKSI LIKE 'PR%'";
                     cmdMember.ExecuteNonQuery();
                 }
 
                 using (MySqlCommand cmdNonMember = new MySqlCommand())
                 {
                     cmdNonMember.Connection = conn;
-                    cmdNonMember.CommandText = "update transaksi tr, customer cr set DISKON = 0 WHERE tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'Non Member' ";
+                    cmdNonMember.CommandText = "UPDATE transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET tr.DISKON = 0 WHERE cr.STATUS LIKE 'Non Member' AND tr.NO_TRANSAKSI LIKE 'PR%'";
                     cmdNonMember.ExecuteNonQuery();
                 }  
             }
@@ -133,8 +124,15 @@ namespace KouveePetShop
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE detail_transaksi_produk dt SET TOTAL = ( SELECT sum(dt.SUB_TOTAL - tr.DISKON) FROM transaksi tr WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI)";
+                    cmdMember.CommandText = "UPDATE detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET dt.TOTAL = (SELECT sum(SUB_TOTAL - (SUB_TOTAL * 10/100)) FROM detail_transaksi_produk dt2 WHERE dt2.ID_PEMBAYARAN_PRODUK = dt.ID_PEMBAYARAN_PRODUK) WHERE cr.STATUS LIKE 'Member'";
                     cmdMember.ExecuteNonQuery();
+                }
+
+                using (MySqlCommand cmdNonMember = new MySqlCommand())
+                {
+                    cmdNonMember.Connection = conn;
+                    cmdNonMember.CommandText = "UPDATE detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET dt.TOTAL = dt.SUB_TOTAL WHERE cr.STATUS LIKE 'Non Member'";
+                    cmdNonMember.ExecuteNonQuery();
                 }
             }
             catch (Exception err)
@@ -152,9 +150,9 @@ namespace KouveePetShop
                 DataTable dt = new DataTable();
                 MySqlDataAdapter adp = new MySqlDataAdapter("select tr.NO_TRANSAKSI, tr.ID_TRANSAKSI, h.NAMA_HEWAN, tr.DISKON, dt.TOTAL, tr.STATUS_PEMBAYARAN, tr.ID_PEGAWAI, pg1.NAMA_PEGAWAI as nama1, pg2.NAMA_PEGAWAI as nama2, tr.ID_PEGAWAI2 from transaksi tr " +
                 "JOIN detail_transaksi_produk dt ON tr.ID_TRANSAKSI = dt.ID_TRANSAKSI " +
-                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN J" +
-                "OIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
-                "JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI " +
+                "JOIN hewan h on tr.ID_HEWAN = h.ID_HEWAN " +
+                "JOIN pegawai pg1 on tr.ID_PEGAWAI = pg1.ID_PEGAWAI " +
+                "OUTER JOIN pegawai pg2 on tr.ID_PEGAWAI2 = pg2.ID_PEGAWAI " +
                 "where tr.NO_TRANSAKSI LIKE 'PR%' and h.Nama_Hewan LIKE '" + CariTransaksiProdukText.Text + "%'", conn);
 
                 adp.Fill(dt);
@@ -177,20 +175,20 @@ namespace KouveePetShop
                 ui.Show();
             }
         }
-
+         
+        /*
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            EditProdukTransaksi edtPr = new EditProdukTransaksi();
             EditHewanTransaksi edt = new EditHewanTransaksi();
             DataRowView selected_row = DataGrid.SelectedItem as DataRowView;
             if(selected_row != null)
             {
-                edt.IdTransaksiText.Text = selected_row["ID_TRANSAKSI"].ToString();
+                edt.idTransaksi = selected_row["ID_TRANSAKSI"].ToString();
                 edt.NamaHewanText.Text = selected_row["NAMA_HEWAN"].ToString();
 
                 edt.Show();     
             }
-        }
+        }*/
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {

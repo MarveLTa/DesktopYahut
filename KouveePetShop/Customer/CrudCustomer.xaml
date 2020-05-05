@@ -90,7 +90,7 @@
                 </StackPanel>
             </GroupBox.Header>
             <StackPanel>
-                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="235" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
+                <DataGrid x:Name="LogsDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="205" VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" BorderThickness="5" BorderBrush="LightGoldenrodYellow" Background="LightGray">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID CUSTOMER" Binding="{Binding ID_CUSTOMER}"  Width="auto">
                             <DataGridTextColumn.ElementStyle>

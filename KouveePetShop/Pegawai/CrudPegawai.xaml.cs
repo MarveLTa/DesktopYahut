@@ -88,40 +88,16 @@ namespace KouveePetShop
 
         private void GetRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("Select ID_PEGAWAI, ROLE, NAMA_PEGAWAI, ALAMAT_PEGAWAI, TANGGALLAHIR_PEGAWAI, NOTELP_PEGAWAI, USERNAME, PASSWORD from pegawai", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGrid();
+            conn.Close();
         }
 
         private void GetLogsRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("select ID_PEGAWAI, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from pegawai", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGridLog();
+            conn.Close();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -133,7 +109,7 @@ namespace KouveePetShop
                 if (selected_row != null)
                 {
                     IdPegawaiText.Text = selected_row["ID_PEGAWAI"].ToString();
-                    ComboBoxRolePegawai.Text = selected_row["ROLE"].ToString();  
+                    ComboBoxRolePegawai.SelectedValue = selected_row["ROLE"];
                     NamaPegawaiText.Text = selected_row["NAMA_PEGAWAI"].ToString();
                     AlamatPegawaiText.Text = selected_row["ALAMAT_PEGAWAI"].ToString();
                     NomorPegawaiText.Text = selected_row["NOTELP_PEGAWAI"].ToString();

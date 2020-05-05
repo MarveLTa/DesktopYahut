@@ -26,23 +26,24 @@ namespace KouveePetShop
         DataTable dt = new DataTable();
         private string connection;
         MySqlConnection conn;
-        MySqlCommand cmd;
 
-        //DataRowView row;
+        public string idTransaksi;
+        private TransaksiProduk TP;
+
 
         public EditHewanTransaksi()
         {
             InitializeComponent();
-
             connection = "Server=localhost; User Id=root;Password=;Database=petshop;Allow Zero Datetime=True";
-            conn = new MySqlConnection(connection);
+            conn = new MySqlConnection(connection);           
             conn.Open();
             FillComboBoxNamaHewan();
+            //FillComboBox();
             conn.Close();
         }
 
         public void FillComboBoxNamaHewan()
-        {
+        {  
             // Ambil ID dan Nama Hewan dari tabel hewan ke combobox
             string Query = "select ID_HEWAN, NAMA_HEWAN from petshop.hewan;";
             MySqlCommand cmdComboBox = new MySqlCommand(Query, conn);
@@ -66,6 +67,21 @@ namespace KouveePetShop
             }
         }
 
+        public void FillComboBox()
+        {
+            
+            MySqlCommand cmd = new MySqlCommand("select h.ID_HEWAN as id, h.NAMA_HEWAN as nama from transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON tr.ID_CUSTOMER = cr.ID_CUSTOMER where tr.ID_TRANSAKSI = '"+idTransaksi+"'", conn);
+            
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+
+            ComboBoxNamaHewan.ItemsSource = dt.DefaultView;
+            ComboBoxNamaHewan.DisplayMemberPath = "nama";
+            ComboBoxNamaHewan.SelectedValuePath = "id";
+            cmd.Dispose();          
+        }
+
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ComboBoxNamaHewan.Text))
@@ -75,10 +91,9 @@ namespace KouveePetShop
             }
             else
             {
-                conn.Open();
-                TransaksiProduk tr = new TransaksiProduk();
+                conn.Open();                
                 //DataRowView selected_row = tr.DataGrid.SelectedItem as DataRowView;
-                adapter = new MySqlDataAdapter("update transaksi set ID_HEWAN = '" + ComboBoxNamaHewan.SelectedValue + "' where ID_TRANSAKSI = '" + IdTransaksiText.Text + "'", conn);
+                adapter = new MySqlDataAdapter("update transaksi set ID_HEWAN = '" + ComboBoxNamaHewan.SelectedValue + "' where ID_TRANSAKSI = '" + idTransaksi + "'", conn);
                 adapter.Fill(ds, "transaksi");
                 MessageBox.Show("Edit berhasil!", "Success");
                 conn.Close();
@@ -96,50 +111,10 @@ namespace KouveePetShop
             DragMove();
         }
 
-        private void BtnProduk_Click(object sender, RoutedEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            EditProdukTransaksi edtPr = new EditProdukTransaksi();
-
-            // Ambil jumlah dari tabel detail transaksi produk ke textbox
-            conn.Open();
-            // jumlah
-            string Query = "select dt.JUMLAH as JUMLAH from detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI WHERE tr.ID_TRANSAKSI = '" + IdTransaksiText.Text + "' ";
-            MySqlCommand cmdTextBox = new MySqlCommand(Query, conn);
-            MySqlDataReader reader;
-
-            // nama produk
-            string Query2 = "select p.NAMA_PRODUK as NAMA from produk p JOIN detail_transaksi_produk dt ON p.ID_PRODUK = dt.ID_PRODUK JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI WHERE tr.ID_TRANSAKSI = '" + IdTransaksiText.Text + "' ";
-            MySqlCommand cmdTextBox2 = new MySqlCommand(Query2, conn);
-            MySqlDataReader reader2;
-
-            try
-            {
-                // kirim value jumlah ke window berikutnya
-                reader = cmdTextBox.ExecuteReader();
-                while (reader.Read())
-                {
-                    edtPr.JumlahProdukText.Text = reader.GetString("JUMLAH");
-                }
-                reader.Close();
-
-                // kirim value nama produk ke window berikutnya
-                reader2 = cmdTextBox2.ExecuteReader();
-                while (reader2.Read())
-                {
-                    edtPr.NamaProdukText.Text = reader2.GetString("NAMA");
-                }
-                reader2.Close();
-
-                edtPr.namaHewan = NamaHewanText.Text;
-                conn.Close();
-                edtPr.Show();
-                this.Close();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-                conn.Close();
-            }   
+            TransaksiProduk TP = new TransaksiProduk();
+            TP.GetRecords();
         }
     }
 }

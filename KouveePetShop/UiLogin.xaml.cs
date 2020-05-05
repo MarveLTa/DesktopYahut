@@ -23,7 +23,6 @@ namespace KouveePetShop
     {       
         UiDashboard dashboardAdmin = new UiDashboard();
         UiKasir dashboardKasir = new UiKasir();
-        CrudSupplier CS = new CrudSupplier();
         public UiLogin()
         {
             InitializeComponent();          
@@ -57,8 +56,7 @@ namespace KouveePetShop
                         dashboardAdmin.RoleText.Text = user;
                         dashboardKasir.RoleText.Text = user;
 
-                        //CS.cobaText.Text = user;
-                       // dashboardAdmin.roleValue = user;
+                        string idPegawai = ds.Tables[0].Rows[0]["ID_PEGAWAI"].ToString();
 
                         // User akan diarahkan berdasar pada role
                         string role = ds.Tables[0].Rows[0]["ROLE"].ToString();
@@ -67,7 +65,6 @@ namespace KouveePetShop
                             case "Admin":
                                // dashboardAdmin.GetValueRole(user);
                                 dashboardAdmin.SendValueRole(user);
-                                CS.GetValueRole(user);
                                 dashboardAdmin.Show();
                                 this.Close();
                                 break;

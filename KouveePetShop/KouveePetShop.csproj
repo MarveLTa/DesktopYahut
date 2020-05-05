@@ -74,14 +74,23 @@
     <Compile Include="Customer\CrudCustomer.xaml.cs">
       <DependentUpon>CrudCustomer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditProdukTransaksi.xaml.cs">
+    <Compile Include="Kasir\EditJasaTransaksi.xaml.cs">
+      <DependentUpon>EditJasaTransaksi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\EditProdukTransaksi.xaml.cs">
       <DependentUpon>EditProdukTransaksi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditHewanTransaksi.xaml.cs">
+    <Compile Include="Kasir\EditHewanTransaksi.xaml.cs">
       <DependentUpon>EditHewanTransaksi.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pegawai\CrudPegawai.xaml.cs">
       <DependentUpon>CrudPegawai.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\Transaksi\StrukProduk.xaml.cs">
+      <DependentUpon>StrukProduk.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\Transaksi\StrukJasaLayanan.xaml.cs">
+      <DependentUpon>StrukJasaLayanan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supplier\CrudSupplier.xaml.cs">
       <DependentUpon>CrudSupplier.xaml</DependentUpon>
@@ -107,11 +116,20 @@
     <Compile Include="Kasir\Transaksi\TransaksiJasaLayanan.xaml.cs">
       <DependentUpon>TransaksiJasaLayanan.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Kasir\TambahProdukTransaksi.xaml.cs">
+      <DependentUpon>TambahProdukTransaksi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\TambahJasaLayananTransaksi.xaml.cs">
+      <DependentUpon>TambahJasaLayananTransaksi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UiLogin.xaml.cs">
       <DependentUpon>UiLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UiProsesTransaksi.xaml.cs">
+    <Compile Include="Kasir\UiProsesTransaksi.xaml.cs">
       <DependentUpon>UiProsesTransaksi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Kasir\Transaksi\UiProsesTransaksiJasaLayanan.xaml.cs">
+      <DependentUpon>UiProsesTransaksiJasaLayanan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ukuran Hewan\CrudUkuranHewan.xaml.cs">
       <DependentUpon>CrudUkuranHewan.xaml</DependentUpon>
@@ -123,15 +141,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditProdukTransaksi.xaml">
+    <Page Include="Kasir\EditJasaTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditHewanTransaksi.xaml">
+    <Page Include="Kasir\EditProdukTransaksi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\EditHewanTransaksi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pegawai\CrudPegawai.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\Transaksi\StrukProduk.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\Transaksi\StrukJasaLayanan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,11 +197,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Kasir\TambahProdukTransaksi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\TambahJasaLayananTransaksi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UiLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UiProsesTransaksi.xaml">
+    <Page Include="Kasir\UiProsesTransaksi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kasir\Transaksi\UiProsesTransaksiJasaLayanan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +264,9 @@
     <Resource Include="Pictures\home.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\logo_kouveepetshop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

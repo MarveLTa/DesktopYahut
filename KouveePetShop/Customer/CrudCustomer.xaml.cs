@@ -52,40 +52,16 @@ namespace KouveePetShop
 
         private void GetRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("select ID_CUSTOMER, NAMA_CUSTOMER, ALAMAT_CUSTOMER, TANGGALLAHIR_CUSTOMER, NOTELP_CUSTOMER, STATUS from customer", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGrid();
+            conn.Close();
         }
 
         private void GetLogsRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("select ID_CUSTOMER, CREATED_AT, UPDATE_AT, DELETE_AT, CREATED_BY, UPDATED_BY from customer", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                LogsDataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGridLog();
+            conn.Close();
         }
 
         private void TampilDataGrid()

@@ -26,7 +26,6 @@ namespace KouveePetShop
         DataTable dt = new DataTable();
         private string connection;
         MySqlConnection conn;
-        MySqlCommand cmd;
 
         public string idTransaksi;
         public string status;
@@ -38,10 +37,39 @@ namespace KouveePetShop
             {
                 connection = "Server=localhost; User Id=root;Password=;Database=petshop;Allow Zero Datetime=True";
                 conn = new MySqlConnection(connection);
+                conn.Open();
+                FillComboBoxNamaPegawai();
+                conn.Close();
+
+                Loaded += Window_Loaded;
             }
             catch (MySqlException e)
             {
                 MessageBox.Show(e.Message, "Warning");
+            }
+        }
+
+        public void FillComboBoxNamaPegawai()
+        {
+            // Ambil ID dan Nama produk dari tabel produk ke combobox
+            string Query = "select ID_PEGAWAI, NAMA_PEGAWAI from petshop.pegawai WHERE ROLE = 'Kasir';";
+            MySqlCommand cmdComboBox = new MySqlCommand(Query, conn);
+            MySqlDataReader reader;
+            try
+            {
+                reader = cmdComboBox.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int idPegawai = reader.GetInt32("ID_PEGAWAI");
+                    string namaPegawai = reader.GetString("NAMA_PEGAWAI");
+                    ComboBoxNamaKasir.Items.Add(idPegawai + " - " + namaPegawai);
+                }
+                reader.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
             }
         }
 
@@ -74,7 +102,7 @@ namespace KouveePetShop
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("SELECT dt.ID_PEMBAYARAN_PRODUK, p.NAMA_PRODUK as nama, dt.JUMLAH as jumlah from detail_transaksi_produk dt JOIN produk p ON dt.ID_PRODUK = p.ID_PRODUK JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN WHERE h.NAMA_HEWAN LIKE '" + NamaHewanText.Text + "' ", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dt.ID_PEMBAYARAN_PRODUK, p.NAMA_PRODUK as nama, dt.JUMLAH as jumlah from detail_transaksi_produk dt JOIN produk p ON dt.ID_PRODUK = p.ID_PRODUK JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN WHERE tr.ID_TRANSAKSI = '" + idTransaksi + "' ", conn);
             try
             {
                 //conn.Open();
@@ -93,8 +121,9 @@ namespace KouveePetShop
         private void HitungTotalDiskon()
         {
             MySqlCommand cmd = new MySqlCommand("SELECT sum(tr.DISKON) as DISKON from transaksi tr " +
-                "JOIN customer cr ON tr.ID_CUSTOMER = cr.ID_CUSTOMER " +
-                "WHERE cr.NAMA_CUSTOMER LIKE '" + NamaCustomerText.Text + "'", conn);
+                "JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN " +
+                "JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER " +
+                "WHERE tr.ID_TRANSAKSI = '" + idTransaksi + "'", conn);
             MySqlDataReader reader;
 
             try
@@ -120,8 +149,9 @@ namespace KouveePetShop
         {
             MySqlCommand cmd = new MySqlCommand("SELECT sum(dt.TOTAL) as TOTAL from detail_transaksi_produk dt " +
                 "JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI " +
-                "JOIN customer cr ON tr.ID_CUSTOMER = cr.ID_CUSTOMER " +
-                "WHERE cr.NAMA_CUSTOMER LIKE '" + NamaCustomerText.Text + "'", conn);
+                "JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN " +
+                "JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER " +
+                "WHERE tr.ID_TRANSAKSI = '" + idTransaksi + "'", conn);
             MySqlDataReader reader;
 
             try
@@ -149,7 +179,7 @@ namespace KouveePetShop
             {
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT tr.STATUS_PEMBAYARAN as STATUS from transaksi tr JOIN customer cr ON tr.ID_CUSTOMER = cr.ID_CUSTOMER WHERE tr.STATUS_PEMBAYARAN = 'Success' AND cr.NAMA_CUSTOMER = '" + NamaCustomerText.Text + "'", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT tr.STATUS_PEMBAYARAN as STATUS from transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER WHERE tr.STATUS_PEMBAYARAN = 'Success' AND tr.ID_TRANSAKSI = '" + idTransaksi + "'", conn);
                 MySqlDataReader reader;
 
                 reader = cmd.ExecuteReader();
@@ -181,7 +211,7 @@ namespace KouveePetShop
                 CekStatus();
                 conn.Open();
                 
-                if(status == "Success")
+                if(status == "Succes")
                 {
                     MessageBox.Show("Transaksi sudah dibayar!", "Warning");
                     conn.Close();
@@ -194,17 +224,26 @@ namespace KouveePetShop
                         MessageBox.Show("Silahkan refresh data terlebih dahulu", "Warning");
                         conn.Close();
                     }
+                    else if(ComboBoxNamaKasir.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Field tidak boleh kosong", "Warning");
+                        conn.Close();
+                    }
                     else
                     {
                         using (MySqlCommand cmd = new MySqlCommand())
                         {
                             cmd.Connection = conn;
-                            cmd.CommandText = "UPDATE transaksi tr, customer cr SET tr.STATUS_PEMBAYARAN = 'Success' WHERE tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.NAMA_CUSTOMER LIKE '" + NamaCustomerText.Text + "'";
+                            cmd.CommandText = "UPDATE transaksi tr, customer cr SET tr.STATUS_PEMBAYARAN = 'Success', tr.ID_PEGAWAI2 = '" + ComboBoxNamaKasir.SelectedValue + "' WHERE tr.ID_TRANSAKSI = '" + idTransaksi + "'";
                             cmd.ExecuteNonQuery();
 
                             UpdateStok();
                             MessageBox.Show("Berhasil dibayar!", "Success");
                             conn.Close();
+
+                            StrukProduk SP = new StrukProduk();
+                            SP.idTransaksi = idTransaksi;
+                            SP.Show();  
                             this.Close();
                         }
                     }      
@@ -260,18 +299,32 @@ namespace KouveePetShop
                 }
                 reader2.Close();
 
-                TampilDataGrid();
                 SubTotal();
                 Diskon();
                 Total();
                 HitungTotalDiskon();
                 HitungTotalHarga();
+                TampilDataGrid();                           
                 conn.Close();
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
                 conn.Close();
+            }
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            TambahProdukTransaksi tp = new TambahProdukTransaksi();
+            tp.idTransaksi = idTransaksi;
+
+            DataRowView selected_row = DataGrid.SelectedItem as DataRowView;
+            if (selected_row != null)
+            {
+                string idDetail = selected_row["ID_PEMBAYARAN_PRODUK"].ToString();
+                tp.idDetail = idDetail;
+                tp.Show();
             }
         }
 
@@ -400,14 +453,14 @@ namespace KouveePetShop
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE transaksi tr SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * (10 / 100)) FROM detail_transaksi_produk dt, customer cr WHERE tr.ID_TRANSAKSI = dt.ID_TRANSAKSI AND tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'M%')";
+                    cmdMember.CommandText = "UPDATE transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET tr.DISKON = (SELECT sum(dt.SUB_TOTAL * 10 / 100) FROM detail_transaksi_produk dt WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI) WHERE cr.STATUS LIKE 'Member' AND tr.NO_TRANSAKSI LIKE 'PR%'";
                     cmdMember.ExecuteNonQuery();
                 }
 
                 using (MySqlCommand cmdNonMember = new MySqlCommand())
                 {
                     cmdNonMember.Connection = conn;
-                    cmdNonMember.CommandText = "update transaksi tr, customer cr set DISKON = 0 WHERE tr.ID_CUSTOMER = cr.ID_CUSTOMER AND cr.STATUS LIKE 'Non Member' ";
+                    cmdNonMember.CommandText = "UPDATE transaksi tr JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET tr.DISKON = 0 WHERE cr.STATUS LIKE 'Non Member' AND tr.NO_TRANSAKSI LIKE 'PR%'";
                     cmdNonMember.ExecuteNonQuery();
                 }
             }
@@ -424,8 +477,15 @@ namespace KouveePetShop
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE detail_transaksi_produk dt SET TOTAL = ( SELECT sum(dt.SUB_TOTAL - tr.DISKON) FROM transaksi tr WHERE dt.ID_TRANSAKSI = tr.ID_TRANSAKSI)";
+                    cmdMember.CommandText = "UPDATE detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET dt.TOTAL = (SELECT sum(SUB_TOTAL - (SUB_TOTAL * 10/100)) FROM detail_transaksi_produk dt2 WHERE dt2.ID_PEMBAYARAN_PRODUK = dt.ID_PEMBAYARAN_PRODUK) WHERE cr.STATUS LIKE 'Member'";
                     cmdMember.ExecuteNonQuery();
+                }
+
+                using (MySqlCommand cmdNonMember = new MySqlCommand())
+                {
+                    cmdNonMember.Connection = conn;
+                    cmdNonMember.CommandText = "UPDATE detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET dt.TOTAL = dt.SUB_TOTAL WHERE cr.STATUS LIKE 'Non Member'";
+                    cmdNonMember.ExecuteNonQuery();
                 }
             }
             catch (Exception err)
@@ -441,7 +501,7 @@ namespace KouveePetShop
                 using (MySqlCommand cmdMember = new MySqlCommand())
                 {
                     cmdMember.Connection = conn;
-                    cmdMember.CommandText = "UPDATE produk p SET p.JUMLAH_PRODUK = (SELECT sum(p.JUMLAH_PRODUK - dt.JUMLAH) from detail_transaksi_produk dt WHERE p.ID_PRODUK = dt.ID_PRODUK)";
+                    cmdMember.CommandText = "UPDATE produk p JOIN detail_transaksi_produk dt ON p.ID_PRODUK = dt.ID_PRODUK JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI SET p.JUMLAH_PRODUK = (SELECT SUM(JUMLAH_PRODUK - dt.JUMLAH) FROM produk p2 WHERE p2.ID_PRODUK = p.ID_PRODUK) WHERE dt.ID_TRANSAKSI = '" + idTransaksi + "'";
                     cmdMember.ExecuteNonQuery();
                 }
             }
@@ -450,5 +510,10 @@ namespace KouveePetShop
                 MessageBox.Show(err.Message);
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            BtnRefresh_Click(sender, e);
+        }       
     }
 }

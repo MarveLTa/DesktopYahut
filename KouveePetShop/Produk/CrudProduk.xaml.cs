@@ -93,40 +93,16 @@ namespace KouveePetShop
 
         private void GetRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                DataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGrid();
+            conn.Close();
         }
 
         private void GetLogsRecords()
         {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("select ID_PRODUK, CREATED_AT, UPDATED_AT, DELETED_AT, CREATED_BY, UPDATED_BY from produk", conn);
-                DataGrid.Items.Refresh();
-                conn.Open();
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-                conn.Close();
-
-                LogsDataGrid.DataContext = dt;
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            conn.Open();
+            TampilDataGridLog();
+            conn.Close();
         }
 
         private void CariProdukText_TextChanged(object sender, TextChangedEventArgs e)

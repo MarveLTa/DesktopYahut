@@ -211,7 +211,7 @@ namespace KouveePetShop
                 CekStatus();
                 conn.Open();
                 
-                if(status == "Succes")
+                if(status == "Success")
                 {
                     MessageBox.Show("Transaksi sudah dibayar!", "Warning");
                     conn.Close();

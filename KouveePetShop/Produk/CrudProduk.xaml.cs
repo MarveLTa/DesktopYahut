@@ -55,11 +55,12 @@ namespace KouveePetShop
 
         private void TampilDataGrid()
         {
+            /*
             ds = new DataSet();
             try
             {
                 // Tampil data ke dataGrid
-                adapter = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+                adapter = new MySqlDataAdapter("Select ID_PRODUK, NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK from produk", conn);
                 adapter.Fill(ds, "produk");
                 conn.Close();
                 GetRecords();
@@ -69,7 +70,23 @@ namespace KouveePetShop
                 MessageBox.Show(d.Message);
                 conn.Close();
                 return;
+            }*/
+
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK, NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK from produk", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                DataGrid.DataContext = dt;
             }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
+            conn.Close();
         }
 
         private void TampilDataGridLog()
@@ -94,15 +111,26 @@ namespace KouveePetShop
         private void GetRecords()
         {
             conn.Open();
-            TampilDataGrid();
+            // Tampil data ke dataGrid
+            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK, NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK from produk", conn);
+            try
+            {
+                //conn.Open();
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                DataGrid.DataContext = dt;
+            }
+            catch (MySqlException d)
+            {
+                MessageBox.Show(d.Message);
+            }
             conn.Close();
         }
 
         private void GetLogsRecords()
         {
-            conn.Open();
             TampilDataGridLog();
-            conn.Close();
         }
 
         private void CariProdukText_TextChanged(object sender, TextChangedEventArgs e)
@@ -111,7 +139,7 @@ namespace KouveePetShop
             {
                 //Fungsi untuk mencari produk sesuai nama
                 DataTable dt = new DataTable();
-                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk where Nama_Produk LIKE '" + CariProdukText.Text + "%'", conn);
+                MySqlDataAdapter adp = new MySqlDataAdapter("Select ID_PRODUK, NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK from produk where Nama_Produk LIKE '" + CariProdukText.Text + "%'", conn);
                 adp.Fill(dt);
                 DataGrid.DataContext = dt;
             }
@@ -359,7 +387,7 @@ namespace KouveePetShop
         private void BtnTampil_Click(object sender, RoutedEventArgs e)
         {
             // Tampil data ke dataGrid
-            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK as 'ID PRODUK', NAMA_PRODUK as 'NAMA PRODUK', HARGA_PRODUK as 'HARGA PRODUK', SATUAN, JUMLAH_PRODUK AS 'JUMLAH PRODUK', JUMLAH_MINIMUM_PRODUK AS 'JUMLAH MINIMUM PRODUK', GAMBAR_PRODUK AS 'GAMBAR PRODUK' from produk", conn);
+            MySqlCommand cmd = new MySqlCommand("Select ID_PRODUK , NAMA_PRODUK, HARGA_PRODUK, SATUAN, JUMLAH_PRODUK, JUMLAH_MINIMUM_PRODUK, GAMBAR_PRODUK from produk", conn);
             try
             {
                 conn.Open();
@@ -383,12 +411,12 @@ namespace KouveePetShop
                 DataRowView selected_row = gd.SelectedItem as DataRowView;
                 if (selected_row != null)
                 {
-                    IdProdukText.Text = selected_row["ID PRODUK"].ToString();
-                    NamaProdukText.Text = selected_row["NAMA PRODUK"].ToString();
-                    HargaProdukText.Text = selected_row["HARGA PRODUK"].ToString();
+                    IdProdukText.Text = selected_row["ID_PRODUK"].ToString();
+                    NamaProdukText.Text = selected_row["NAMA_PRODUK"].ToString();
+                    HargaProdukText.Text = selected_row["HARGA_PRODUK"].ToString();
                     SatuanText.Text = selected_row["SATUAN"].ToString();
-                    JumlahProdukText.Text = selected_row["JUMLAH PRODUK"].ToString();
-                    JumlahMinimumProdukText.Text = selected_row["JUMLAH MINIMUM PRODUK"].ToString();
+                    JumlahProdukText.Text = selected_row["JUMLAH_PRODUK"].ToString();
+                    JumlahMinimumProdukText.Text = selected_row["JUMLAH_MINIMUM_PRODUK"].ToString();
 
                     // Gambar
                     //GambarProduk = selected_row["GAMBAR_PRODUK"];
@@ -409,7 +437,7 @@ namespace KouveePetShop
                     //Image newImage = byteArrayToImage(image);
                     //GambarProduk = newImage.Save("GAMBAR_PRODUK");
 
-                    byte[] blob = (byte[])selected_row["Gambar Produk"];
+                    byte[] blob = (byte[])selected_row["Gambar_Produk"];
                     MemoryStream ms = new MemoryStream();
                     ms.Write(blob, 0, blob.Length);
                     ms.Position = 0;

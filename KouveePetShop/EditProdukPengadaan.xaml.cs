@@ -17,9 +17,9 @@ using System.Data;
 namespace KouveePetShop
 {
     /// <summary>
-    /// Interaction logic for TambahProdukTransaksi.xaml
+    /// Interaction logic for EditProdukPengadaan.xaml
     /// </summary>
-    public partial class TambahProdukTransaksi : Window
+    public partial class EditProdukPengadaan : Window
     {
         MySqlDataAdapter adapter = new MySqlDataAdapter();
         public DataSet ds = new DataSet();
@@ -29,7 +29,7 @@ namespace KouveePetShop
 
         public string idTransaksi;
         public string idDetail;
-        public TambahProdukTransaksi()
+        public EditProdukPengadaan()
         {
             InitializeComponent();
 
@@ -69,7 +69,7 @@ namespace KouveePetShop
             DragMove();
         }
 
-        private void BtnTambah_Click(object sender, RoutedEventArgs e)
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(ComboBoxNamaProduk.Text))
             {
@@ -78,30 +78,30 @@ namespace KouveePetShop
             }
             else
             {
-                using(MySqlCommand cmd = new MySqlCommand())
-                {
-                    try
-                    {
-                        conn.Open();
-                        cmd.CommandText = "INSERT INTO DETAIL_TRANSAKSI_PRODUK(ID_TRANSAKSI, ID_PRODUK, JUMLAH) VALUES(@idtransaksi, @idproduk, @jumlah)";
-                        cmd.CommandType = CommandType.Text;
-                        cmd.Connection = conn;
+                conn.Open();
+                adapter = new MySqlDataAdapter("update detail_pengadaan_produk dp JOIN pengadaan_produk pp ON dp.ID_TRANSAKSIPENGADAAN = pp.ID_TRANSAKSIPENGADAAN SET dp.ID_PRODUK = '" + ComboBoxNamaProduk.SelectedValue + "', dp.JUMLAH = '" + JumlahProdukText.Text + "' WHERE dp.ID_TRANSAKSIPENGADAAN = pp.ID_TRANSAKSIPENGADAAN AND pp.ID_TRANSAKSIPENGADAAN = '" + idTransaksi + "' AND dp.ID_DETAIL_PENGADAAN = '" + idDetail + "'", conn);
+                adapter.Fill(ds, "detail_pengadaan_produk");
+                MessageBox.Show("Edit berhasil!", "Success");
+                conn.Close();
 
-                        cmd.Parameters.AddWithValue("@idtransaksi", idTransaksi);
-                        cmd.Parameters.AddWithValue("@idproduk", ComboBoxNamaProduk.SelectedValue);
-                        cmd.Parameters.AddWithValue("@jumlah", JumlahProdukText.Text);
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-                        MessageBox.Show("Berhasil ditambahkan", "Success");
-                        this.Close();
-                    }
-                    catch(Exception err)
-                    {
-                        MessageBox.Show(err.Message);
-                        conn.Close();
-                    }
+                using (MySqlCommand cmdUpdateNama = new MySqlCommand())
+                {
+                    conn.Open();
+                    cmdUpdateNama.Connection = conn;
+                    cmdUpdateNama.CommandText = "UPDATE detail_pengadaan_produk dp JOIN produk p ON dp.ID_PRODUK = p.ID_PRODUK SET dp.NAMA_PRODUK = p.NAMA_PRODUK where dp.ID_PRODUK = p.ID_PRODUK";
+                    cmdUpdateNama.ExecuteNonQuery();
+                    conn.Close();
                 }
-               
+
+                using(MySqlCommand cmdUpdateSatuan = new MySqlCommand())
+                {
+                    conn.Open();
+                    cmdUpdateSatuan.Connection = conn;
+                    cmdUpdateSatuan.CommandText = "UPDATE detail_pengadaan_produk dp JOIN produk p ON dp.ID_PRODUK = p.ID_PRODUK SET dp.SATUAN = p.SATUAN where dp.ID_PRODUK = p.ID_PRODUK";
+                    cmdUpdateSatuan.ExecuteNonQuery();
+                    conn.Close();
+                }
+                this.Close();
             }
         }
 

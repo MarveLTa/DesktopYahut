@@ -17,10 +17,11 @@ using System.Data;
 namespace KouveePetShop
 {
     /// <summary>
-    /// Interaction logic for TambahProdukTransaksi.xaml
+    /// Interaction logic for TambahProdukPengadaan.xaml
     /// </summary>
-    public partial class TambahProdukTransaksi : Window
+    public partial class TambahProdukPengadaan : Window
     {
+
         MySqlDataAdapter adapter = new MySqlDataAdapter();
         public DataSet ds = new DataSet();
         DataTable dt = new DataTable();
@@ -29,7 +30,8 @@ namespace KouveePetShop
 
         public string idTransaksi;
         public string idDetail;
-        public TambahProdukTransaksi()
+
+        public TambahProdukPengadaan()
         {
             InitializeComponent();
 
@@ -78,12 +80,12 @@ namespace KouveePetShop
             }
             else
             {
-                using(MySqlCommand cmd = new MySqlCommand())
+                using (MySqlCommand cmd = new MySqlCommand())
                 {
                     try
                     {
                         conn.Open();
-                        cmd.CommandText = "INSERT INTO DETAIL_TRANSAKSI_PRODUK(ID_TRANSAKSI, ID_PRODUK, JUMLAH) VALUES(@idtransaksi, @idproduk, @jumlah)";
+                        cmd.CommandText = "INSERT INTO DETAIL_PENGADAAN_PRODUK(ID_TRANSAKSIPENGADAAN, ID_PRODUK, JUMLAH) VALUES(@idtransaksi, @idproduk, @jumlah)";
                         cmd.CommandType = CommandType.Text;
                         cmd.Connection = conn;
 
@@ -93,15 +95,33 @@ namespace KouveePetShop
                         cmd.ExecuteNonQuery();
                         conn.Close();
                         MessageBox.Show("Berhasil ditambahkan", "Success");
+
+                        using (MySqlCommand cmdUpdateNama = new MySqlCommand())
+                        {
+                            conn.Open();
+                            cmdUpdateNama.Connection = conn;
+                            cmdUpdateNama.CommandText = "UPDATE detail_pengadaan_produk dp JOIN produk p ON dp.ID_PRODUK = p.ID_PRODUK SET dp.NAMA_PRODUK = p.NAMA_PRODUK where dp.ID_PRODUK = p.ID_PRODUK";
+                            cmdUpdateNama.ExecuteNonQuery();
+                            conn.Close();
+                        }
+
+                        using (MySqlCommand cmdUpdateSatuan = new MySqlCommand())
+                        {
+                            conn.Open();
+                            cmdUpdateSatuan.Connection = conn;
+                            cmdUpdateSatuan.CommandText = "UPDATE detail_pengadaan_produk dp JOIN produk p ON dp.ID_PRODUK = p.ID_PRODUK SET dp.SATUAN = p.SATUAN where dp.ID_PRODUK = p.ID_PRODUK";
+                            cmdUpdateSatuan.ExecuteNonQuery();
+                            conn.Close();
+                        }
                         this.Close();
                     }
-                    catch(Exception err)
+                    catch (Exception err)
                     {
                         MessageBox.Show(err.Message);
                         conn.Close();
                     }
                 }
-               
+
             }
         }
 

@@ -74,6 +74,12 @@
     <Compile Include="Customer\CrudCustomer.xaml.cs">
       <DependentUpon>CrudCustomer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditPengadaan.xaml.cs">
+      <DependentUpon>EditPengadaan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditProdukPengadaan.xaml.cs">
+      <DependentUpon>EditProdukPengadaan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Kasir\EditJasaTransaksi.xaml.cs">
       <DependentUpon>EditJasaTransaksi.xaml</DependentUpon>
     </Compile>
@@ -91,6 +97,12 @@
     </Compile>
     <Compile Include="Kasir\Transaksi\StrukJasaLayanan.xaml.cs">
       <DependentUpon>StrukJasaLayanan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StrukPengadaaan.xaml.cs">
+      <DependentUpon>StrukPengadaaan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier\PesanProduk.xaml.cs">
+      <DependentUpon>PesanProduk.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supplier\CrudSupplier.xaml.cs">
       <DependentUpon>CrudSupplier.xaml</DependentUpon>
@@ -122,6 +134,15 @@
     <Compile Include="Kasir\TambahJasaLayananTransaksi.xaml.cs">
       <DependentUpon>TambahJasaLayananTransaksi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Supplier\TransaksiPengadaan.xaml.cs">
+      <DependentUpon>TransaksiPengadaan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier\TambahPengadaan.xaml.cs">
+      <DependentUpon>TambahPengadaan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TambahProdukPengadaan.xaml.cs">
+      <DependentUpon>TambahProdukPengadaan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UiLogin.xaml.cs">
       <DependentUpon>UiLogin.xaml</DependentUpon>
     </Compile>
@@ -138,6 +159,14 @@
       <DependentUpon>UiDashboard.xaml</DependentUpon>
     </Compile>
     <Page Include="Customer\CrudCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditPengadaan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditProdukPengadaan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +191,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Kasir\Transaksi\StrukJasaLayanan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StrukPengadaaan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supplier\PesanProduk.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +239,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Kasir\TambahJasaLayananTransaksi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supplier\TransaksiPengadaan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supplier\TambahPengadaan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TambahProdukPengadaan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

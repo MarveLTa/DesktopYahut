@@ -71,53 +71,67 @@ namespace KouveePetShop
                 case 0:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Visible;
                     BtnUkuranHewan.Visibility = Visibility.Visible;
                     BtnHewan.Visibility = Visibility.Visible;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
                     GridPrincipal.Children.Add(new CrudJasaLayanan());
                     break;
                 case 2:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
                     GridPrincipal.Children.Add(new CrudProduk());
                     break;
                 case 3:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
                     GridPrincipal.Children.Add(new CrudCustomer());
                     break;
                 case 4:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
                     GridPrincipal.Children.Add(new CrudPegawai());
                     break;
                 case 5:
                     GridPrincipal.Children.Clear();
                     BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
                     BtnJenisHewan.Visibility = Visibility.Collapsed;
                     BtnUkuranHewan.Visibility = Visibility.Collapsed;
                     BtnHewan.Visibility = Visibility.Collapsed;
-
-                    //valueRole = 
-                    //CS.GetValueRole(role);
-
-                    GridPrincipal.Children.Add(new CrudSupplier());
+                    BtnCrudSupplier.Visibility = Visibility.Visible;
+                    BtnPesanProduk.Visibility = Visibility.Visible;
+                   // GridPrincipal.Children.Add(new CrudSupplier());
                     break;
                 case 6:
                     string message = "Apakah anda yakin ingin keluar ?";
@@ -180,6 +194,44 @@ namespace KouveePetShop
             BtnJenisHewan.Visibility = Visibility.Visible;
             BtnUkuranHewan.Visibility = Visibility.Visible;
             BtnHewan.Visibility = Visibility.Visible;
+        }
+
+        private void BtnCrudSupplier_Click(object sender, RoutedEventArgs e)
+        {
+            GridPrincipal.Children.Clear();
+            BtnBack.Visibility = Visibility.Collapsed;
+            BtnBackSupplier.Visibility = Visibility.Visible;
+            BtnJenisHewan.Visibility = Visibility.Collapsed;
+            BtnUkuranHewan.Visibility = Visibility.Collapsed;
+            BtnHewan.Visibility = Visibility.Collapsed;
+            BtnCrudSupplier.Visibility = Visibility.Collapsed;
+            BtnPesanProduk.Visibility = Visibility.Collapsed;
+            GridPrincipal.Children.Add(new CrudSupplier());
+        }
+
+        private void BtnPesanProduk_Click(object sender, RoutedEventArgs e)
+        {
+            GridPrincipal.Children.Clear();
+            BtnBack.Visibility = Visibility.Collapsed;
+            BtnBackSupplier.Visibility = Visibility.Visible;
+            BtnJenisHewan.Visibility = Visibility.Collapsed;
+            BtnUkuranHewan.Visibility = Visibility.Collapsed;
+            BtnHewan.Visibility = Visibility.Collapsed;
+            BtnCrudSupplier.Visibility = Visibility.Collapsed;
+            BtnPesanProduk.Visibility = Visibility.Collapsed;
+            GridPrincipal.Children.Add(new PesanProduk());
+        }
+
+        private void BtnBackSupplier_Click(object sender, RoutedEventArgs e)
+        {
+            GridPrincipal.Children.Clear();
+            BtnBack.Visibility = Visibility.Collapsed;
+            BtnBackSupplier.Visibility = Visibility.Collapsed;
+            BtnJenisHewan.Visibility = Visibility.Collapsed;
+            BtnUkuranHewan.Visibility = Visibility.Collapsed;
+            BtnHewan.Visibility = Visibility.Collapsed;
+            BtnCrudSupplier.Visibility = Visibility.Visible;
+            BtnPesanProduk.Visibility = Visibility.Visible;
         }
     }
 }

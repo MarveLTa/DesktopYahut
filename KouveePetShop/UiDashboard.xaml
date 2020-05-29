@@ -46,6 +46,12 @@
                             <TextBlock Text="Back" Margin="3 0 0 0" ></TextBlock>
                         </StackPanel>
                     </Button>
+                    <Button x:Name="BtnBackSupplier" Foreground="Black" Background="LightGray" Height="45" Width="80" HorizontalAlignment="Left" Margin="10 3 0 0"  Click="BtnBackSupplier_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ArrowBack" Margin="0 2 0 0"/>
+                            <TextBlock Text="Back" Margin="3 0 0 0" ></TextBlock>
+                        </StackPanel>
+                    </Button>
                 </Grid>
                 <Grid Margin="30 200">
                     <Button x:Name="BtnUkuranHewan" FontSize="18" Click="BtnUkuranHewan_Click" HorizontalAlignment="Left" Height="250" Width="235">
@@ -85,6 +91,34 @@
                                     </Grid>
                                     <Grid Height="70">
                                         <TextBlock Text="Hewan" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnCrudSupplier" FontSize="18" Click="BtnCrudSupplier_Click" HorizontalAlignment="Left" Height="250" Width="235" Visibility="Hidden">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="200">
+                                <StackPanel>
+                                    <Grid Height="70">
+                                        <materialDesign:PackIcon Kind="BoxDown" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="50"/>
+                                    </Grid>
+                                    <Grid Height="70">
+                                        <TextBlock Text="Supplier" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnPesanProduk" Margin="250,10,274,10" FontSize="18" Click="BtnPesanProduk_Click" HorizontalAlignment="Center" Height="250" Width="255" Visibility="Hidden">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid Width="200">
+                                <StackPanel>
+                                    <Grid Height="70">
+                                        <materialDesign:PackIcon Kind="BoxVariant" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="50"/>
+                                    </Grid>
+                                    <Grid Height="70">
+                                        <TextBlock Text="Pesan Produk" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30"></TextBlock>
                                     </Grid>
                                 </StackPanel>
                             </Grid>

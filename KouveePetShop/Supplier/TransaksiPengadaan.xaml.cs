@@ -148,6 +148,47 @@ namespace KouveePetShop
             conn.Close();
         }
 
+        private void BtnKonfirmasi_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CekStatus();
+                conn.Open();
+
+                if(status == "Success")
+                {
+                    MessageBox.Show("Barang sudah di konfirmasi!", "Warning");
+                    conn.Close();
+                    return;
+                }
+                else if(status == null)
+                {
+                    MessageBox.Show("Bayar barang terlebih dahulu!", "Warning");
+                    conn.Close();
+                    return;
+                }
+                else
+                {
+                    using (MySqlCommand cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "UPDATE pengadaan_produk pp, detail_pengadaan_produk dp SET pp.STATUS_BARANG = 'Success' WHERE pp.ID_TRANSAKSIPENGADAAN = '" + idTransaksi + "'";
+                        cmd.ExecuteNonQuery();
+
+                        // UpdateStok();
+                        MessageBox.Show("Barang berhasil di konfirmasi!", "Success");
+                        conn.Close();
+                        this.Close();
+                    }
+                }
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+                conn.Close();
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             BtnRefresh_Click(sender, e);

@@ -134,6 +134,17 @@ namespace KouveePetShop
                    // GridPrincipal.Children.Add(new CrudSupplier());
                     break;
                 case 6:
+                    GridPrincipal.Children.Clear();
+                    BtnBack.Visibility = Visibility.Collapsed;
+                    BtnBackSupplier.Visibility = Visibility.Collapsed;
+                    BtnJenisHewan.Visibility = Visibility.Collapsed;
+                    BtnUkuranHewan.Visibility = Visibility.Collapsed;
+                    BtnHewan.Visibility = Visibility.Collapsed;
+                    BtnCrudSupplier.Visibility = Visibility.Collapsed;
+                    BtnPesanProduk.Visibility = Visibility.Collapsed;
+                    GridPrincipal.Children.Add(new Laporan());
+                    break;
+                case 7:
                     string message = "Apakah anda yakin ingin keluar ?";
                     string caption = "Warning";
                     MessageBoxButton buttons = MessageBoxButton.YesNo;

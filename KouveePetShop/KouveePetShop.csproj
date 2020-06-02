@@ -74,10 +74,31 @@
     <Compile Include="Customer\CrudCustomer.xaml.cs">
       <DependentUpon>CrudCustomer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditPengadaan.xaml.cs">
+    <Compile Include="Laporan.xaml.cs">
+      <DependentUpon>Laporan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanJasaLayananTerlaris.xaml.cs">
+      <DependentUpon>LaporanJasaLayananTerlaris.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanPendapatanBulanan.xaml.cs">
+      <DependentUpon>LaporanPendapatanBulanan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanPendapatanTahunan.xaml.cs">
+      <DependentUpon>LaporanPendapatanTahunan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanPengadaanBulanan.xaml.cs">
+      <DependentUpon>LaporanPengadaanBulanan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanPengadaanTahunan.xaml.cs">
+      <DependentUpon>LaporanPengadaanTahunan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanProdukTerlaris.xaml.cs">
+      <DependentUpon>LaporanProdukTerlaris.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Supplier\EditPengadaan.xaml.cs">
       <DependentUpon>EditPengadaan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditProdukPengadaan.xaml.cs">
+    <Compile Include="Supplier\EditProdukPengadaan.xaml.cs">
       <DependentUpon>EditProdukPengadaan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Kasir\EditJasaTransaksi.xaml.cs">
@@ -98,7 +119,7 @@
     <Compile Include="Kasir\Transaksi\StrukJasaLayanan.xaml.cs">
       <DependentUpon>StrukJasaLayanan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StrukPengadaaan.xaml.cs">
+    <Compile Include="Supplier\StrukPengadaaan.xaml.cs">
       <DependentUpon>StrukPengadaaan.xaml</DependentUpon>
     </Compile>
     <Compile Include="Supplier\PesanProduk.xaml.cs">
@@ -140,7 +161,7 @@
     <Compile Include="Supplier\TambahPengadaan.xaml.cs">
       <DependentUpon>TambahPengadaan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TambahProdukPengadaan.xaml.cs">
+    <Compile Include="Supplier\TambahProdukPengadaan.xaml.cs">
       <DependentUpon>TambahProdukPengadaan.xaml</DependentUpon>
     </Compile>
     <Compile Include="UiLogin.xaml.cs">
@@ -162,11 +183,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditPengadaan.xaml">
+    <Page Include="Laporan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditProdukPengadaan.xaml">
+    <Page Include="LaporanJasaLayananTerlaris.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaporanPendapatanBulanan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaporanPendapatanTahunan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaporanPengadaanBulanan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaporanPengadaanTahunan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LaporanProdukTerlaris.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supplier\EditPengadaan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Supplier\EditProdukPengadaan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,7 +243,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StrukPengadaaan.xaml">
+    <Page Include="Supplier\StrukPengadaaan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TambahProdukPengadaan.xaml">
+    <Page Include="Supplier\TambahProdukPengadaan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -180,6 +180,13 @@
                         <TextBlock Text="Supplier" FontSize="25" VerticalAlignment="Center" Margin="20 0"/>
                     </StackPanel>
                 </ListViewItem>
+                <!-- Laporan -->
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Paper" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Laporan" FontSize="25" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
                 <!-- Logout -->
                 <ListViewItem Height="60">
                     <StackPanel Orientation="Horizontal">

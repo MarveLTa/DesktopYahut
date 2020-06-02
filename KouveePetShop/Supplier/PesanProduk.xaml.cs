@@ -46,6 +46,23 @@ namespace KouveePetShop
             }
         }
 
+        private void Total()
+        {
+            try
+            {
+                using (MySqlCommand cmdMember = new MySqlCommand())
+                {
+                    cmdMember.Connection = conn;
+                    cmdMember.CommandText = "UPDATE detail_transaksi_produk dt JOIN transaksi tr ON dt.ID_TRANSAKSI = tr.ID_TRANSAKSI JOIN hewan h ON tr.ID_HEWAN = h.ID_HEWAN JOIN customer cr ON h.ID_CUSTOMER = cr.ID_CUSTOMER SET dt.TOTAL = (SELECT sum(SUB_TOTAL - (SUB_TOTAL * 10/100)) FROM detail_transaksi_produk dt2 WHERE dt2.ID_PEMBAYARAN_PRODUK = dt.ID_PEMBAYARAN_PRODUK) WHERE cr.STATUS LIKE 'Member'";
+                    cmdMember.ExecuteNonQuery();
+                }
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
         private void TampilDataGrid()
         {
             // Tampil data ke dataGrid

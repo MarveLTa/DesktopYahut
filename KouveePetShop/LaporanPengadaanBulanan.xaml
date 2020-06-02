@@ -1,0 +1,125 @@
+﻿<Window x:Class="KouveePetShop.LaporanPengadaanBulanan"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KouveePetShop"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="LaporanPengadaanBulanan" Height="800" Width="535.5" ResizeMode="NoResize" FontFamily="Roboto" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" WindowStyle="None" MouseDown="Window_MouseDown">
+
+    <!-- Untuk center header pada DataGrid -->
+    <Window.Resources>
+        <Style x:Key="CenterGridHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer>
+        <Grid>
+
+            <Button x:Name="BtnRefresh" HorizontalAlignment="Right" Margin="20 20 80 20"  VerticalAlignment="Top" Visibility="Hidden" Click="BtnRefresh_Click">
+                <materialDesign:PackIcon Kind="Printer"/>
+            </Button>
+            <Grid x:Name="print">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="600"/>
+                    <RowDefinition Height="0"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="10"  Grid.Row="0">
+                    <Image Source="/KouveePetShop;component/Assets/logo_kouveepetshop.png" Width="500" Height="100" VerticalAlignment="Bottom" Margin="0,5" RenderTransformOrigin="0.49,0.18"/>
+                </StackPanel>
+                <Button x:Name="BtnPrint" HorizontalAlignment="Right" Margin="10"  VerticalAlignment="Top" Click="BtnPrint_Click">
+                    <materialDesign:PackIcon Kind="Printer"/>
+                </Button>
+                <StackPanel Orientation="Vertical" Margin="10"  Grid.Row="1">
+                    <TextBlock Text="Laporan Pengadaan Produk Bulanan" FontSize="16" Margin="0" TextAlignment="Center" FontWeight="DemiBold"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" Margin="20">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <StackPanel Orientation="Horizontal" Margin="0 8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <TextBlock Text="Bulan : " FontSize="12" Margin="5" Grid.Column="0"/>
+                                <TextBlock x:Name="BulanText" FontSize="12" Margin="5" FontWeight="DemiBold" Grid.Column="1"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <TextBlock Text="Tahun : " FontSize="12" Margin="5" Grid.Column="0"/>
+                                <TextBlock x:Name="TahunText" FontSize="12" Margin="5" FontWeight="DemiBold" Grid.Column="1"/>
+
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Margin="5 30 5 0">
+                        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True" VerticalScrollBarVisibility="Auto"  CanUserResizeColumns="True"  Background="White" Foreground="Black">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nama Produk" Binding="{Binding NamaProduk}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*" CanUserSort="False">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Jumlah Pengeluaran" Binding="{Binding TOTAL}" HeaderStyle="{StaticResource CenterGridHeaderStyle}" Width="*" CanUserSort="False">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <StackPanel Margin="5 30 5 0">
+                        <Grid Height="40" HorizontalAlignment="Right" Width="165">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Total :" Grid.Column="0" FontSize="15" Margin="-12,5,48,5" HorizontalAlignment="Right" Width="46"/>
+                            <TextBlock x:Name="TotalPengadaanText" FontSize="15" Margin="39,5,5,5" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Margin="0 20 10 0">
+                        <Grid Height="40" HorizontalAlignment="Right" Width="165">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Dicetak Tanggal : " Grid.Column="0" FontSize="15" Margin="-82,5,48,5" HorizontalAlignment="Right" Width="116"/>
+                            <TextBlock x:Name="TanggalCetakText" FontSize="15" Margin="39,5,5,5" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Window>
